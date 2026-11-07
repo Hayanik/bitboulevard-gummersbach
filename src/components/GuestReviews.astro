@@ -1,0 +1,105 @@
+---
+import { ArrowUpRight, Star, PencilLine } from 'lucide-react';
+import { googleRating, guestReviews } from '../data/reviews';
+import { googleReview } from '../config/business';
+import type { Language } from '../config/locale';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+const score = new Intl.NumberFormat(en ? 'en-GB' : 'de-DE', { minimumFractionDigits: 1 }).format(googleRating.value);
+const checked = new Intl.DateTimeFormat(en ? 'en-GB' : 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' }).format(new Date(googleRating.checkedAt));
+---
+<section class="guest-voices light" id="gaestestimmen" aria-labelledby="guest-voices-title">
+  <div class="shell">
+    <div class="voices-heading">
+      <div><p class="eyebrow">{en ? 'Good evenings. In their words.' : 'Gute Abende. Gute Worte.'}</p><h2 id="guest-voices-title">{en ? 'WHAT GUESTS' : 'WAS GÄSTE'}<br/><em>{en ? 'SAY.' : 'SAGEN.'}</em></h2></div>
+      <p>{en ? 'Selected excerpts from five-star Google reviews. Quotes are shown in the original German.' : 'Ausgewählte Auszüge aus 5-Sterne-Rezensionen auf Google.'}</p>
+    </div>
+
+    <div class="voices-layout">
+      <aside class="voices-score" aria-label={en ? 'Google rating overview' : 'Google-Bewertung im Überblick'}>
+        <span class="voices-google">Google <span>{en ? 'Reviews' : 'Rezensionen'}</span></span>
+        <p class="voices-number" aria-label={en ? `${score} out of 5` : `${score} von 5 Sternen`}>{score}<small>/ 5</small></p>
+        <div class="voices-score-stars" aria-hidden="true">
+          {Array.from({ length: 5 },(_,i) => <span class:list={['score-star', { 'score-star-half': i === 4 }]}><Star size={23}/><Star className="score-star-fill" size={23}/></span>)}
+        </div>
+        <p class="voices-count">{en ? `Based on ${googleRating.count} reviews` : `Aus ${googleRating.count} Rezensionen`}</p>
+        <p class="voices-date">{en ? 'Snapshot' : 'Stand'} <time datetime={googleRating.checkedAt}>{checked}</time></p>
+        <a class="text-link" href={googleRating.source}>{en ? 'Read all reviews' : 'Alle Rezensionen lesen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+      </aside>
+
+      <div class="voices-grid">
+        {guestReviews.map((review,i) => <figure class:list={['voice', { 'voice-featured': i === 0 }]}>
+          <div class="voice-top"><span class="voice-index" aria-hidden="true">0{i+1}</span><span class="voice-stars"><span class="sr-only">{en ? '5 out of 5 stars' : '5 von 5 Sternen'}</span><span aria-hidden="true">★★★★★</span></span><span class="voice-quote-mark" aria-hidden="true">“</span></div>
+          <blockquote lang="de"><p>„{review.leadingEllipsis && '… '}{review.quote}“</p></blockquote>
+          <figcaption>
+            <span class="voice-avatar" aria-hidden="true">{review.initials}</span>
+            <div><span class="voice-author">{review.author}</span><span class="voice-meta">Google · {review.age[lang]}</span></div>
+            <a class="voice-source" href={review.source} aria-label={en ? `Google review by ${review.author}` : `Google-Rezension von ${review.author}`}><ArrowUpRight size={19} aria-hidden="true"/></a>
+          </figcaption>
+        </figure>)}
+      </div>
+    </div>
+
+    <div class="voices-invite">
+      <div><PencilLine size={24} aria-hidden="true"/><div><h3>{en ? 'How was your visit?' : 'Wie war dein Besuch?'}</h3><p>{en ? 'Share your experience with us on Google.' : 'Teile deine Erfahrung mit uns auf Google.'}</p><p class="voices-login-note">{en ? 'A Google account is required to post a review.' : 'Zum Schreiben einer Rezension brauchst du ein Google-Konto.'}</p></div></div>
+      <a class="button button-dark" href={googleReview}>{en ? 'Write a Google review' : 'Auf Google bewerten'} <ArrowUpRight size={18} aria-hidden="true"/></a>
+    </div>
+  </div>
+</section>
+<style>
+  .guest-voices { padding-block: clamp(60px,8vw,135px); }
+  .voices-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem 3rem; margin-bottom: clamp(28px,4vw,65px); }
+  .voices-heading h2 { font: 830 clamp(2.8rem,7.5vw,8rem)/.93 var(--body); letter-spacing: -.07em; margin-top: .2em; }
+  .voices-heading h2 em { font: inherit; color: var(--surface-accent); }
+  .voices-heading > p { max-width: 32ch; font-size: .9rem; }
+  .voices-layout { display: grid; grid-template-columns: .55fr 1.45fr; gap: clamp(22px,4vw,65px); align-items: start; }
+  .voices-score { border-top: 1px solid var(--rule); padding-top: 1.2rem; }
+  .voices-google { font-weight: 800; font-size: 1rem; letter-spacing: -.03em; }
+  .voices-google > span { display: block; font: 650 .72rem/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; margin-top: .2rem; }
+  .voices-number { display: flex; align-items: baseline; gap: .5rem; font: 800 clamp(5rem,10vw,10rem)/1 var(--body); letter-spacing: -.09em; margin-block: .3em .12em; }
+  .voices-number small { font: 650 .96rem/1.4 var(--mono); letter-spacing: 0; }
+  .voices-score-stars { display: flex; gap: .15rem; color: var(--surface-accent); }
+  .score-star { display: inline-grid; }
+  .score-star > svg { grid-area: 1/1; }
+  .score-star-fill { fill: currentColor; }
+  .score-star-half .score-star-fill { clip-path: inset(0 50% 0 0); }
+  .voices-count { margin-top: .7rem; font-size: .86rem; font-weight: 750; }
+  .voices-date { font: 600 .7rem/1.4 var(--mono); margin-top: .35rem; }
+  .voices-score .text-link { margin-top: .75rem; }
+  .voices-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(14px,2vw,30px); }
+  .voice { display: flex; flex-direction: column; padding: clamp(16px,2.3vw,32px); border-block: 1px solid var(--rule); min-width: 0; }
+  .voice-featured { background: var(--raised); border-color: var(--surface-accent); }
+  .voice-top { display: flex; align-items: center; gap: .8rem; color: var(--surface-accent); }
+  .voice-index { font: 700 .68rem var(--mono); }
+  .voice-stars { font-size: .83rem; letter-spacing: .12em; }
+  .voice-quote-mark { margin-left: auto; font: 600 3rem/.6 var(--display); padding-top: .2em; }
+  .voice blockquote { flex: 1; margin: 1.45rem 0 1.8rem; }
+  .voice blockquote p { font: 520 clamp(1.45rem,2.9vw,3rem)/1.05 var(--display); letter-spacing: -.045em; }
+  .voice figcaption { display: flex; align-items: center; gap: .7rem; }
+  .voice-avatar { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border: 1px solid var(--rule); border-radius: 50%; font: 750 .67rem var(--mono); color: var(--surface-accent); }
+  .voice-author { display: block; font-size: .79rem; font-weight: 850; overflow-wrap: anywhere; }
+  .voice-meta { display: block; font: 550 .63rem/1.4 var(--mono); margin-top: .12rem; }
+  .voice-source { display: grid; place-items: center; flex: none; margin-left: auto; min-width: 44px; min-height: 44px; }
+  .voice-source:hover { color: var(--surface-accent); background: var(--raised); }
+  .voices-invite { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem; border-top: 1px solid var(--rule); margin-top: clamp(30px,5vw,65px); padding-top: 1.5rem; }
+  .voices-invite > div { display: flex; gap: 1rem; align-items: start; }
+  .voices-invite > div > svg { margin-top: .2rem; flex: none; color: var(--surface-accent); }
+  .voices-invite h3 { font: 800 clamp(1.1rem,2vw,1.8rem)/1.15 var(--body); letter-spacing: -.045em; }
+  .voices-invite p { font-size: .9rem; margin-top: .35rem; }
+  .voices-invite .voices-login-note { font-size: .75rem; }
+  @media (max-width: 850px) {
+    .voices-layout { grid-template-columns: minmax(0,1fr); }
+    .voices-score { display: grid; grid-template-columns: auto 1fr; column-gap: 1.7rem; align-items: start; }
+    .voices-number { grid-column: 1; grid-row: 2/6; margin: .15em 0 0; font-size: 6rem; }
+    .voices-score-stars { grid-column: 2; margin-top: 1.1rem; }
+    .voices-count,.voices-date { grid-column: 2; }
+    .voices-score .text-link { grid-column: 1/-1; }
+  }
+  @media (max-width: 560px) {
+    .voices-grid { grid-template-columns: minmax(0,1fr); gap: 1rem; }
+    .voice blockquote p { font-size: clamp(1.75rem,7.6vw,2.7rem); }
+    .voice { padding: 1.2rem; }
+    .voices-number { font-size: 5.4rem; }
+    .voices-score { column-gap: 1.1rem; }
+  }
+</style>

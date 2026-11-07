@@ -1,5 +1,6 @@
 export const business = {
   name: 'Bit Boulevard',
+  googlePlaceId: 'ChIJW0LM3Pq1vkcREWXj5lyjyrQ',
   owner: 'Jannis Kanelias',
   street: 'Brückenstraße 8',
   postalCode: '51643',
@@ -20,6 +21,7 @@ export const business = {
 
 const location = encodeURIComponent(`${business.name}, ${business.street}, ${business.postalCode} ${business.city}`);
 export const directions = 'https://www.google.com/maps/dir/?api=1&destination=' + location;
+export const googleReview = 'https://search.google.com/local/writereview?placeid=' + business.googlePlaceId;
 export const maps = 'https://maps.google.com/maps?cid=13027404491528561937';
 export const mapEmbed = 'https://maps.google.com/maps?q=' + location + '&z=16&output=embed';
 

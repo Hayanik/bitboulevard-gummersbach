@@ -50,3 +50,11 @@ Lighthouse, reale Core Web Vitals und eine vollständige WCAG-Konformitätsprüf
 - Standarddarstellung und Verhalten aus der vom Nutzer bereitgestellten Originaldatei AnimatedBird.tsx übernommen. Nicht verwendete Varianten wurden entfernt. Die Animation wird nur auf den beiden Barrierefreiheitsseiten eingebunden.
 - Klick, Enter und Leertaste getestet. Der Vogel reagiert mit Hüpfen, Flügelschlagen und Herzen. Pause, statische Rückmeldung und Fortsetzen geprüft. Reduced Motion nutzt die statische Darstellung mit weiterhin bedienbarer Rückmeldung.
 - Die E-Mail-Vorlage adressiert bit-boulevard@web.de. In beiden Sprachen enthält sie Betreff und Felder für eine Barriere-Meldung. Die Erklärung beschreibt das Ziel einer möglichst barrierefreien Website und lädt zu Rückmeldungen ein.
+
+## Google-Gästestimmen
+
+- Vier positive Rezensionen direkt im Google-Maps-Profil mit Autorennamen und 5-Sterne-Bewertung abgeglichen. Kurze Originalauszüge mit Quellenlinks übernommen. Die englische Seite kennzeichnet die deutschen Originalzitate.
+- Der Gesamtdurchschnitt wurde am 07.11.2026 mit 4,5 von 5 bei 191 Rezensionen angezeigt. Die Website zeigt diesen Stand als Momentaufnahme und kennzeichnet die positiven Auszüge als Auswahl.
+- Der direkte Bewertungslink nutzt die im Google-Bewertungsfenster geprüfte Place-ID. Er führt für abgemeldete Nutzer zur Google-Anmeldung. Es wurde keine Rezension verfasst oder veröffentlicht.
+- Deutsche und englische Startseite bei 320, 375, 430, 768, 1024 und 1440 CSS-Pixeln auf Überlauf geprüft. Helle Mobilansicht und dunkle Desktopansicht visuell kontrolliert. Keine Fehler in der erfassten Browserkonsole.
+- Der Bewertungsbereich rendert statisches HTML. Er lädt keine Google-Widgets, externen Profilbilder oder zusätzlichen Client-Skripte.

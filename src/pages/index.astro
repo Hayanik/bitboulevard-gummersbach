@@ -1,5 +1,6 @@
 ---
 import { ArrowUpRight, Bike, MapPin, Smartphone, Utensils } from 'lucide-react';
+import GuestReviews from '../components/GuestReviews.astro';
 import AppDownload from '../components/AppDownload.astro';
 import SignatureHero from '../components/SignatureHero.astro';
 import Base from '../layouts/Base.astro';
@@ -57,6 +58,8 @@ const features = [
       </div>
     </div>
   </section>
+
+  <GuestReviews lang={lang}/>
 
   <section class="bb-section bb-order" id="bestellen">
     <div class="shell">
