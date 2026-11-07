@@ -29,7 +29,7 @@ const structured = {
   '@context': 'https://schema.org', '@type': 'Restaurant', '@id': new URL('/#restaurant', Astro.site),
   name: business.name, url: Astro.site, telephone: '+49 2261 61083', email: business.email,
   servesCuisine: en ? 'Greek' : 'Griechisch', menu: new URL(routes.menu[lang], Astro.site),
-  hasMap: maps, sameAs: [business.deliverySite, business.lieferando],
+  hasMap: maps, sameAs: [business.deliverySite, business.lieferando, business.instagram],
   address: { '@type': 'PostalAddress', streetAddress: business.street, postalCode: business.postalCode, addressLocality: business.city, addressCountry: 'DE' },
 };
 ---

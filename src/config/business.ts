@@ -8,6 +8,7 @@ export const business = {
   phone: '02261 61083',
   tel: 'tel:+49226161083',
   email: 'bit-boulevard@web.de',
+  instagram: 'https://www.instagram.com/bit.boulevard',
   order: 'https://bestellen.bitboulevard-gummersbach.de/menu',
   deliverySite: 'https://bitboulevard-gummersbach.de/',
   lieferando: 'https://www.lieferando.de/speisekarte/bit-boulevard-gummersbach',

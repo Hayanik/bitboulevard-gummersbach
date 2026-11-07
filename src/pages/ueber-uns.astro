@@ -17,7 +17,7 @@ const en = lang === 'en';
     <div class="shell story-grid">
       <figure class="image-frame"><Photo photo={{...photos.room, alt: en ? 'Illustrative image of a warmly lit tavern' : photos.room.alt}}/><figcaption>{en ? 'AI mood image' : 'KI-Stimmungsbild'}</figcaption></figure>
       <div><p class="eyebrow">{en ? 'On Brückenstraße' : 'An der Brückenstraße'}</p><h2>{en ? 'Room to ' : 'Platz zum '}<em>{en ? 'sit together.' : 'Zusammensitzen.'}</em></h2>
-        <p>{en ? 'Bit Boulevard is a Greek tavern. Some guests come for gyros, souvlaki or bifteki. Others get together over pizza and a beer.' : 'Bit Boulevard ist eine griechische Gaststätte. Die einen kommen auf Gyros, Souvlaki oder Bifteki. Die anderen treffen sich zu Pizza und einem Bier.'}</p>
+        <p>{en ? 'Bit Boulevard is a Greek tavern. Some guests come for gyros, souvlaki or a mixed grill. Others get together over pizza and a beer.' : 'Bit Boulevard ist eine griechische Gaststätte. Die einen kommen auf Gyros, Souvlaki oder einen Grillteller. Die anderen treffen sich zu Pizza und einem Bier.'}</p>
         <p>{en ? 'You’ll find us on Brückenstraße, right in central Gummersbach. Stop by for a meal or get in touch to book your next evening with friends.' : 'Du findest uns in der Brückenstraße, mitten in Gummersbach. Komm zum Essen vorbei oder frag einen Tisch für deinen nächsten Abend mit Freunden an.'}</p>
         <a class="text-link" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
       </div>
@@ -26,7 +26,7 @@ const en = lang === 'en';
   <section class="light content-section">
     <div class="shell editorial-split">
       <div><p class="eyebrow">02 / {en ? 'On the table' : 'Auf dem Tisch'}</p><h2>{en ? 'Start with tzatziki.' : 'Erst mal Tzatziki.'}</h2>
-        <p>{en ? 'Start with tzatziki or saganaki, then move on to souvlaki, bifteki or a mixed grill. There’s pizza on the menu too, including the Bit Boulevard with gyros.' : 'Zum Auftakt Tzatziki oder Saganaki, danach Souvlaki, Bifteki oder ein Grillteller. Auf der Karte steht auch Pizza, darunter die Bit Boulevard mit Gyros.'}</p>
+        <p>{en ? 'Start with tzatziki or saganaki, then move on to souvlaki, chicken skewers or a mixed grill. There’s pizza on the menu too, including the Bit Boulevard with gyros.' : 'Zum Auftakt Tzatziki oder Saganaki, danach Souvlaki, Hähnchenspieße oder ein Grillteller. Auf der Karte steht auch Pizza, darunter die Bit Boulevard mit Gyros.'}</p>
         <a class="text-link" href={routes.menu[lang]}>{en ? 'Browse the menu' : 'Speisekarte ansehen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
       </div>
       <figure class="image-frame"><Photo photo={{...photos.souvlaki, alt: en ? 'Illustration of grilled souvlaki with lemon' : photos.souvlaki.alt}}/><figcaption>{en ? 'AI illustration' : 'KI-Bildmotiv'}</figcaption></figure>

@@ -19,6 +19,7 @@ Telephone: ${business.phone}. Email: ${business.email}.
 - [Accessibility and feedback](${new URL(routes.accessibility.en, site)})
 - [Online ordering](${business.order})
 - [Google Maps](${maps})
+- [Instagram](${business.instagram})
 `;
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

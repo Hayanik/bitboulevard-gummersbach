@@ -11,7 +11,7 @@ const en = lang === 'en';
     <div class="footer-display"><h2>{en ? 'SEE YOU' : 'BIS GLEICH'}<br/><em>{en ? 'AT BIT.' : 'IM BIT.'}</em></h2><a class="button" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'} <ArrowUpRight size={18} aria-hidden="true"/></a></div>
     <div class="footer-grid">
       <div><h3>{en ? 'Find us' : 'Vorbeikommen'}</h3><address>{business.street}<br/>{business.postalCode} {business.city}</address><a href={routes.directions[lang]}>{en ? 'Directions' : 'Anfahrt'}</a><a href={maps}>Google Maps ↗</a><a href={googleReview}>{en ? "Write a Google review" : "Auf Google bewerten"} ↗</a></div>
-      <div><h3>{en ? 'Get in touch' : 'Kontakt'}</h3><a href={business.tel}>{business.phone}</a><a href={`mailto:${business.email}`}>{business.email}</a></div>
+      <div><h3>{en ? 'Get in touch' : 'Kontakt'}</h3><a href={business.tel}>{business.phone}</a><a href={`mailto:${business.email}`}>{business.email}</a><a href={business.instagram}>Instagram · @bit.boulevard ↗</a></div>
       <nav aria-label={en ? 'More pages' : 'Weitere Seiten'}><h3>{en ? 'Explore' : 'Entdecken'}</h3>{navigation(lang).map(({href,label}) => <a href={href}>{label}</a>)}<a href={routes.kitchen[lang]}>{en ? 'From the kitchen' : 'Aus der Küche'}</a></nav>
       <div><h3>{en ? 'Order' : 'Bestellen'}</h3><a href={business.order}>{en ? 'Direct ordering' : 'Direkt bestellen'} ↗</a><a href={business.lieferando}>Lieferando ↗</a><a href={business.android}>{en ? 'Android app' : 'Android-App'} ↗</a><a href={business.ios}>{en ? 'iOS app' : 'iOS-App'} ↗</a></div>
     </div>

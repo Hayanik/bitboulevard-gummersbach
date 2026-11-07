@@ -2,20 +2,22 @@
 import { ArrowUpRight } from 'lucide-react';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import OriginalMenu from '../components/OriginalMenu.astro';
 import MenuExplorer from '../components/MenuExplorer';
+import { allergenNames } from '../data/menu';
 import { business } from '../config/business';
 import { language, routes } from '../config/locale';
+import '../styles/menu.css';
 const lang = language(Astro.url.pathname);
 const en = lang === 'en';
 ---
-<Base title={en ? 'Menu | Bit Boulevard Gummersbach' : 'Speisekarte | Bit Boulevard Gummersbach'}
-  description={en ? 'Greek favourites, starters, pizza, meat dishes and drinks at Bit Boulevard in Gummersbach.' : 'Griechische Klassiker, Vorspeisen, Pizza, Fleischgerichte und Getränke bei Bit Boulevard in Gummersbach entdecken.'}>
-  <PageHead label={en ? 'From the kitchen' : 'Aus der Küche'} title={en ? 'THE MENU.' : 'DIE KARTE.'} description={en ? 'From tzatziki to the mixed grill. Explore the dishes on our online menu.' : 'Von Tzatziki bis Grillteller. Entdecke das Angebot aus unserer Online-Karte.'}/>
-  <div class="light content-section">
-    <div class="shell">
-      <div class="menu-note"><p>{en ? 'For online prices, see the ordering portal. For dine-in prices and allergen information, please call ' : 'Die Online-Preise findest du im Bestellportal. Zu Preisen vor Ort und Allergenen hilft dir unser Team unter '}<a href={business.tel}>{business.phone}</a>{en ? '.' : ' weiter.'}</p><a class="button button-dark" href={business.order}>{en ? 'Order direct' : 'Direkt bestellen'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
-      <a class="text-link" href={routes.kitchen[lang]}>{en ? 'A guide to our kitchen' : 'Ein Wegweiser zur Küche'} <ArrowUpRight size={17} aria-hidden="true"/></a>
-      <MenuExplorer client:load lang={lang}/>
-    </div>
-  </div>
+<Base title={en ? 'Menu & Prices | Bit Boulevard Gummersbach' : 'Speisekarte & Preise | Bit Boulevard Gummersbach'}
+ description={en ? 'Explore the original Bit Boulevard menu: Greek specialities, starters, salads, pizza in two sizes, meat dishes and extras, with prices and ingredient search.' : 'Die Original-Speisekarte von Bit Boulevard: griechische Spezialitäten, Vorspeisen, Salate, Pizza in zwei Größen, Fleischgerichte und Extras. Mit Preisen und Zutatensuche.'}>
+ <PageHead label={en ? 'Original menu / 49 dishes & extras' : 'Originalkarte / 49 Gerichte & Extras'} title={en ? 'GOOD TASTE. YOUR CHOICE.' : 'GUTER GESCHMACK. DEINE WAHL.'} description={en ? 'A table full of possibilities. Explore the original cards or find your next favourite by name, ingredient or dish number.' : 'Ein Tisch voller Möglichkeiten. Blättere durch die Originalkarten oder finde deinen nächsten Favoriten nach Name, Zutat oder Kartennummer.'}/>
+ <div class="light content-section"><div class="shell">
+  <div class="menu-note"><p>{en ? 'Dishes and prices follow the published restaurant menu. Online prices, selection and availability may differ; the ordering portal shows the terms for your online order.' : 'Gerichte und Preise entsprechen der veröffentlichten Restaurantkarte. Online-Preise, Auswahl und Verfügbarkeit können abweichen; für deine Online-Bestellung gelten die Angaben im Bestellportal.'}</p><a class="button button-dark" href={business.order}>{en ? 'Order direct' : 'Direkt bestellen'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+  <OriginalMenu lang={lang}/>
+  <MenuExplorer client:load lang={lang}/>
+  <aside class="menu-allergen-note" aria-labelledby="allergen-title"><h2 id="allergen-title">{en ? 'Good to know before you order.' : 'Gut zu wissen, bevor du bestellst.'}</h2><p>{en ? 'The allergen letters reproduce the original card. Missing labels do not mean a dish is allergen-free. For example, the fish platter includes calamari and the salads come with bread. Please speak to our team about allergies, intolerances and current recipes before ordering: ' : 'Die Allergenbuchstaben geben die Kennzeichnung der Originalkarte wieder. Fehlende Angaben bedeuten nicht, dass ein Gericht allergenfrei ist. So enthält der Fischteller auch Calamari und die Salate werden mit Brot serviert. Bitte sprich bei Allergien oder Unverträglichkeiten vor der Bestellung mit unserem Team über die aktuelle Zubereitung: '}<a href={business.tel}>{business.phone}</a>.</p><details class="menu-legend"><summary>{en ? 'Allergen key from the original menu' : 'Allergenlegende der Originalkarte'}</summary><dl>{Object.entries(allergenNames).map(([code,names]) => <div><dt>{code}</dt><dd>{names[en ? 1 : 0]}</dd></div>)}</dl></details><a class="text-link" href={routes.kitchen[lang]}>{en ? 'More about our kitchen' : 'Mehr aus unserer Küche'} <ArrowUpRight size={17} aria-hidden="true"/></a></aside>
+ </div></div>
 </Base>

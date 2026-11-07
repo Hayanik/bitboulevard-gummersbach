@@ -1,5 +1,7 @@
 ---
 import { ArrowUpRight, Bike, MapPin, Smartphone, Utensils } from 'lucide-react';
+import InstagramSection from '../components/InstagramSection.astro';
+import '../styles/social.css';
 import GuestReviews from '../components/GuestReviews.astro';
 import AppDownload from '../components/AppDownload.astro';
 import SignatureHero from '../components/SignatureHero.astro';
@@ -16,7 +18,7 @@ const en = lang === 'en';
 const features = [
   { photo: photos.gyros, title: 'Gyros', text: en ? 'With fries, tzatziki and onions.' : 'Mit Pommes, Tzatziki und Zwiebeln.' },
   { photo: photos.souvlaki, title: 'Souvlaki', text: en ? 'Pork neck skewers with fries, salad and tzatziki.' : 'Schweinenackenspieße mit Pommes, Salat und Tzatziki.' },
-  { photo: photos.bifteki, title: 'Bifteki', text: en ? 'Stuffed with sheep’s cheese, with fries, salad and tzatziki.' : 'Mit Schafskäse gefüllt, dazu Pommes, Salat und Tzatziki.' },
+  { photo: photos.bifteki, title: 'Bifteki', text: en ? 'From the delivery menu: stuffed with sheep’s cheese, with fries, salad and tzatziki. See the ordering portal for availability.' : 'Aus der Lieferkarte: mit Schafskäse gefüllt, dazu Pommes, Salat und Tzatziki. Verfügbarkeit im Bestellportal.' },
 ];
 ---
 <Base title={en ? 'Bit Boulevard | Greek Restaurant & Delivery in Gummersbach' : 'Bit Boulevard | Griechisches Restaurant & Lieferservice in Gummersbach'}
@@ -60,6 +62,7 @@ const features = [
   </section>
 
   <GuestReviews lang={lang}/>
+  <InstagramSection lang={lang}/>
 
   <section class="bb-section bb-order" id="bestellen">
     <div class="shell">

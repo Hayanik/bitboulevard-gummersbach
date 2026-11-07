@@ -8,7 +8,7 @@ import { photos } from '../data/photos';
 import { language, routes } from '../config/locale';
 const lang = language(Astro.url.pathname);
 const en = lang === 'en';
-const captions = en ? ['Warm lighting, timber and a place to sit together.', 'The skewer is a classic on our menu, including a country-style pork version.', 'On our menu, bifteki comes filled with sheep’s cheese.', 'We serve gyros with fries, tzatziki and onions.'] : ['Warmes Licht, Holz und ein Tisch zum Zusammensitzen.', 'Der Spieß ist ein Klassiker auf der Karte, etwa als Bauern-Souvlaki vom Schweinenacken.', 'Auf unserer Karte ist Bifteki mit Schafskäse gefüllt.', 'Auf der Karte gibt’s Gyros mit Pommes, Tzatziki und Zwiebeln.'];
+const captions = en ? ['Warm lighting, timber and a place to sit together.', 'The skewer is a classic on our menu, including a country-style pork version.', 'Bifteki is listed in the delivery menu. The restaurant menu and online selection may differ.', 'We serve gyros with fries, tzatziki and onions.'] : ['Warmes Licht, Holz und ein Tisch zum Zusammensitzen.', 'Der Spieß ist ein Klassiker auf der Karte, etwa als Bauern-Souvlaki vom Schweinenacken.', 'Bifteki steht in der Lieferkarte. Restaurantkarte und Online-Auswahl können voneinander abweichen.', 'Auf der Karte gibt’s Gyros mit Pommes, Tzatziki und Zwiebeln.'];
 const gallery = await Promise.all([photos.room, photos.souvlaki, photos.bifteki, photos.gyros].map(async (photo, i) => ({
   ...photo,
   title: en ? ['Light in the tavern', 'Grilled souvlaki', 'Grilled bifteki', 'Gyros by candlelight'][i] : photo.title,
@@ -21,7 +21,7 @@ const gallery = await Promise.all([photos.room, photos.souvlaki, photos.bifteki,
   <section class="light content-section">
     <div class="shell gallery-intro">
       <div><p class="eyebrow">01 / {en ? 'The visual story' : 'Die Bilderstrecke'}</p><h2>{en ? 'From the room to the grill.' : 'Von der Gaststube zum Grill.'}</h2></div>
-      <p>{en ? 'Four illustrations explore the light of a tavern and three dishes from the menu. Select any image for a closer look. In the viewer, use the arrow keys to browse and Escape to close.' : 'Vier Bildmotive zeigen die Stimmung einer Gaststube und drei Gerichte von der Karte. Wähle ein Bild für die Großansicht. Dort kannst du mit den Pfeiltasten blättern und mit Escape schließen.'}</p>
+      <p>{en ? 'Four illustrations explore the light of a tavern and three Greek dishes. Select any image for a closer look. In the viewer, use the arrow keys to browse and Escape to close.' : 'Vier Bildmotive zeigen die Stimmung einer Gaststube und drei griechische Gerichte. Wähle ein Bild für die Großansicht. Dort kannst du mit den Pfeiltasten blättern und mit Escape schließen.'}</p>
     </div>
     <div class="shell gallery-grid">
       {gallery.map((photo,i) => <figure>

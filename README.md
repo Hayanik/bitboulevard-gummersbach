@@ -20,7 +20,7 @@ Astro gibt 26 statische Seiten nach `dist/` aus. `SITE_URL` setzt die produktive
 
 - `src/config/business.ts` bündelt Adresse, Kontakt, Buchungslinks, Bestellportal, App-Stores, Kartenstandort und veröffentlichte Küchen- und Lieferzeiten.
 - `src/config/locale.ts` definiert die Sprachrouten. Die englischen Routen teilen sich die Seitenkomponenten mit den deutschen.
-- `src/data/menu.ts` und `src/data/menu-en.ts` pflegen die Karte. Astro rendert sie als HTML. React ergänzt Suche und Filter.
+- `src/data/menu.ts` enthält die zweisprachige, aus den vier Originalbildern übertragene Restaurantkarte mit Nummern, Preisen, Pizzagrößen und gedruckten Allergenkennzeichnungen. Astro rendert sie als HTML. React ergänzt Suche und Filter.
 - `src/data/photos.ts` bündelt die gekennzeichneten KI-Motive. Astro erzeugt responsive WebP-Varianten. Die Wortmarke ist ein Entwurf.
 - `src/styles/boulevard.css` enthält die visuelle Überarbeitung. Die Bewegungen der Startseite sitzen in `src/lib/motion.ts` und im Bildwechsel der Gerichte. Browser-Animationen und IntersectionObserver ersetzen die frühere GSAP-Abhängigkeit. Drei lateinische WOFF2-Dateien decken die beiden Sprachfassungen ab. Es gibt kein Autoplay-Video.
 - Heller und dunkler Modus folgen zunächst der Systemeinstellung. Eine manuelle Auswahl wird unter `bb-theme` lokal gespeichert.
@@ -35,7 +35,7 @@ Astro gibt 26 statische Seiten nach `dist/` aus. `SITE_URL` setzt die produktive
 
 - [Kontakt des Restaurants](https://www.bitboulevard.de/kontakt/) und [Bestandsimpressum](https://www.bitboulevard.de/impressum/) für Adresse, Betreiber, Reservierungswege und Küchenzeiten.
 - [Lieferdienst](https://bitboulevard-gummersbach.de/), [Bestellportal](https://bestellen.bitboulevard-gummersbach.de/menu), [Lieferando](https://www.lieferando.de/speisekarte/bit-boulevard-gummersbach), [Android](https://play.google.com/store/apps/details?id=com.lieferfabrik.bitboulevard) und [iOS](https://apps.apple.com/de/app/bit-boulevard-in-gummersbach/id6504585524) für Bestellwege, Lieferzeiten und Apps.
-- Der Google-Maps-Pin wurde in der eingebetteten Karte anhand des Restaurants und der Adresse geprüft. Die Recherche ergab keinen hinreichenden Beleg für weitere Betriebe oder ein eindeutig zugehöriges Social-Media-Profil.
+- Der Google-Maps-Pin wurde in der eingebetteten Karte anhand des Restaurants und der Adresse geprüft. Das Instagram-Profil https://www.instagram.com/bit.boulevard wurde vom Auftraggeber bestätigt und ist auf Startseite, im Footer und in den strukturierten Daten hinterlegt. Weitere Betriebe sind nicht belegt.
 - Das Impressum nennt die belegten Anbieter- und Kontaktangaben nach [§ 5 DDG](https://www.gesetze-im-internet.de/ddg/__5.html). Die Startfreigabe für weitere gegebenenfalls nötige Angaben steht aus.
 - Die Schriften stammen aus Fontsource und stehen unter der SIL Open Font License. Die Lizenztexte liegen in den jeweiligen npm-Paketen.
 
@@ -47,3 +47,9 @@ Astro gibt 26 statische Seiten nach `dist/` aus. `SITE_URL` setzt die produktive
 - Datenschutzhinweise anhand des gewählten Hostings und der tatsächlichen Datenverarbeitung fertigstellen. Beide Datenschutzseiten sind bis dahin als Entwurf gekennzeichnet und mit `noindex` versehen.
 
 [Testbericht](TESTBERICHT.md)
+
+## Originalkarte und Social Media
+
+Die Restaurantkarte basiert auf den vier veröffentlichten Originalbildern vom 07.11.2026. Alle 49 Positionen, gedruckte Preise, Nummern und Varianten werden in Deutsch und Englisch ausgegeben. Herkunft und Transkriptionshinweise: src/assets/menu/SOURCES.md. Die Suchfunktion unterstützt Zutaten in beiden Sprachen, mehrere Begriffe, Umlautumschreibungen, exakte Kartennummern und Preisreihenfolge je Kategorie. Gedruckte Allergenangaben sind keine eigenständige Prüfung der Rezepturen. Preise und Auswahl des Bestellportals können abweichen. Bestehende Bifteki-Beschreibungen werden der Lieferkarte zugeordnet.
+
+Instagram ist als lokal gestalteter Bereich mit Direktlinks eingebunden; es werden weder Feed noch Tracking von Instagram geladen. Die Originalkarten werden lokal ausgeliefert, ohne Abruf von der bisherigen Website.
