@@ -1,0 +1,36 @@
+---
+import { ArrowUpRight, Bike, Smartphone, Utensils } from 'lucide-react';
+import AppDownload from '../components/AppDownload.astro';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Hours from '../components/Hours.astro';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+---
+<Base title={en ? 'Order for Delivery or Collection | Bit Boulevard' : 'Online bestellen & abholen | Bit Boulevard'}
+  description={en ? 'Order Greek food and pizza from Bit Boulevard in Gummersbach for delivery or collection.' : 'Gyros, griechische Gerichte und Pizza in Gummersbach zur Lieferung oder Abholung bestellen.'}>
+  <PageHead label={en ? 'Delivery & collection' : 'Lieferung & Abholung'} title={en ? 'BIT AT HOME.' : 'BIT FÜR ZU HAUSE.'}
+    description={en ? 'Choose direct ordering, Lieferando or the Bit Boulevard app.' : 'Bestelle direkt im Bestellportal, über Lieferando oder mit der Bit-Boulevard-App.'}/>
+  <section class="bb-order content-section">
+    <div class="shell">
+      <div class="order-board">
+        <a class="order-primary" href={business.order}><Bike aria-hidden="true"/><div><small>01 / WEB</small><strong>{en ? 'Order direct' : 'Direkt bestellen'}</strong><span>{en ? 'Delivery or collection' : 'Lieferung oder Abholung'}</span></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={business.lieferando}><Utensils aria-hidden="true"/><div><small>02 / PARTNER</small><strong>Lieferando</strong><span>{en ? 'Open the restaurant profile' : 'Zum Restaurantprofil'}</span></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={business.android}><Smartphone aria-hidden="true"/><div><small>03 / ANDROID</small><strong>Google Play</strong></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={business.ios}><Smartphone aria-hidden="true"/><div><small>04 / IOS</small><strong>App Store</strong></div><ArrowUpRight aria-hidden="true"/></a>
+      </div>
+      <AppDownload lang={lang}/>
+    </div>
+  </section>
+  <section class="light content-section">
+    <div class="shell bb-visit-grid">
+      <div><p class="eyebrow">{en ? 'Before ordering' : 'Vor der Bestellung'}</p><h2>{en ? 'Prices & delivery.' : 'Preise & Lieferung.'}</h2>
+        <p>{en ? 'The ordering portal shows current prices, delivery areas and any delivery fees. For allergen questions, call us before ordering.' : 'Aktuelle Preise, Liefergebiet und mögliche Lieferkosten siehst du im Bestellportal. Bei Fragen zu Allergenen ruf uns bitte vor der Bestellung an.'}</p>
+        <div class="actions"><a class="text-link" href={routes.menu[lang]}>{en ? 'Explore the menu' : 'Speisekarte ansehen'}</a><a class="text-link" href={business.tel}>{business.phone}</a></div>
+      </div>
+      <div><Hours lang={lang}/><a class="text-link" href={routes.directions[lang]}>{en ? 'Collection address and directions' : 'Adresse und Anfahrt zur Abholung'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+    </div>
+  </section>
+</Base>

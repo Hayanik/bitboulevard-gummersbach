@@ -1,0 +1,18 @@
+---
+import { business } from '../config/business';
+import type { Language } from '../config/locale';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+---
+<div class="hours">
+  <div><h3>{en ? 'Kitchen' : 'Küche'}</h3><dl>
+    <div><dt>{en ? 'Tue–Sat' : 'Di–Sa'}</dt><dd>{business.hours.kitchen[0]}</dd></div>
+    <div><dt>{en ? 'Sun' : 'So'}</dt><dd>{business.hours.kitchen[1]}</dd></div>
+    <div><dt>{en ? 'Mon' : 'Mo'}</dt><dd>{en ? 'Closed' : 'Ruhetag'}</dd></div>
+  </dl></div>
+  <div><h3>{en ? 'Delivery' : 'Lieferdienst'}</h3><dl>
+    <div><dt>{en ? 'Tue–Sun' : 'Di–So'}</dt><dd>{business.hours.delivery}</dd></div>
+    <div><dt>{en ? 'Mon' : 'Mo'}</dt><dd>{en ? 'Closed' : 'Geschlossen'}</dd></div>
+  </dl><a href={business.order}>{en ? 'Check availability ↗' : 'Verfügbarkeit prüfen ↗'}</a></div>
+</div>
+<p class="hours-note">{en ? 'Published kitchen and delivery hours. For restaurant hours, please call.' : 'Veröffentlichte Küchen- und Lieferzeiten. Die Öffnungszeiten des Lokals bitte telefonisch erfragen.'}</p>

@@ -1,0 +1,34 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import { photos } from '../data/photos';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+const chapters = en ? [
+  { label: '01 / TO START', title: 'Something to share.', body: 'Tzatziki, stuffed vine leaves and saganaki are on the starter menu. For a salad, look for the Greek salad with sheep’s cheese and olives.', href: '#vorspeisen', link: 'Starters and salads' },
+  { label: '02 / FROM THE GRILL', title: 'Skewers, gyros and bifteki.', body: 'The country-style souvlaki is made with pork neck. Bifteki comes filled with sheep’s cheese. If you want a mix, the house grill plate includes gyros, souvlaki, chicken steak and pork fillet.', href: '#spezialitaeten', link: 'Greek specialities', photo: photos.souvlaki, alt: 'Illustration of grilled souvlaki and lemon' },
+  { label: '03 / FROM THE OVEN', title: 'Gyros on pizza, too.', body: 'Pizza Bit Boulevard combines gyros with mushrooms, salami, ham and peppers. The Hellas takes it in another direction with sheep’s cheese, olives and peppers.', href: '#pizza', link: 'Explore the pizzas' },
+] : [
+  { label: '01 / ZUM AUFTAKT', title: 'Etwas zum Teilen.', body: 'Tzatziki, gefüllte Weinblätter und Saganaki stehen bei den Vorspeisen. Wer mit einem Salat starten möchte, findet den Bauernsalat mit Schafskäse und Oliven.', href: '#vorspeisen', link: 'Vorspeisen und Salate' },
+  { label: '02 / VOM GRILL', title: 'Spieße, Gyros und Bifteki.', body: 'Beim Bauern-Souvlaki kommt Schweinenacken auf den Spieß. Das Bifteki ist mit Schafskäse gefüllt. Wer von allem etwas probieren will, findet auf dem Grillteller Gyros, Souvlaki, Hähnchensteak und Schweinefilet.', href: '#spezialitaeten', link: 'Griechische Spezialitäten', photo: photos.souvlaki, alt: photos.souvlaki.alt },
+  { label: '03 / AUS DEM OFEN', title: 'Gyros gibt’s auch auf Pizza.', body: 'Die Pizza Bit Boulevard kombiniert Gyros mit Pilzen, Salami, Schinken und Peperoni. Auf der Hellas kommen stattdessen Schafskäse, Oliven und Peperoni dazu.', href: '#pizza', link: 'Pizza entdecken' },
+];
+---
+<Base title={en ? 'From the Kitchen | Bit Boulevard' : 'Aus der Küche | Bit Boulevard'} description={en ? 'A guide to the Bit Boulevard menu, from Greek starters and grill dishes to pizza.' : 'Ein Wegweiser durch die Bit-Boulevard-Küche, von griechischen Vorspeisen und Grillgerichten bis zur Pizza.'}>
+  <PageHead label={en ? 'A guide to the menu' : 'Ein Wegweiser zur Karte'} title={en ? 'FROM THE KITCHEN.' : 'AUS DER KÜCHE.'} description={en ? 'A few dishes to look for when you browse the menu.' : 'Ein paar Gerichte, nach denen du in der Speisekarte Ausschau halten kannst.'}/>
+  <div class="light content-section">
+    <div class="shell editorial-chapters">
+      {chapters.map(chapter => <section class:list={['editorial-chapter', {'with-image': chapter.photo}]}>
+        <div><p class="eyebrow">{chapter.label}</p><h2>{chapter.title}</h2><p>{chapter.body}</p><a class="text-link" href={routes.menu[lang]+chapter.href}>{chapter.link} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+        {chapter.photo && <figure class="image-frame"><Photo photo={{src:chapter.photo.src, alt:chapter.alt ?? ''}}/><figcaption>{en ? 'AI illustration' : 'KI-Bildmotiv'}</figcaption></figure>}
+      </section>)}
+    </div>
+  </div>
+  <section class="bb-questions content-section">
+    <div class="shell editorial-callout"><div><p class="eyebrow">{en ? 'Before ordering' : 'Vor der Bestellung'}</p><h2>{en ? 'Questions about a dish?' : 'Fragen zu einem Gericht?'}</h2><p>{en ? 'Call us for current information about ingredients or allergens.' : 'Ruf uns an, wenn du aktuelle Informationen zu Zutaten oder Allergenen brauchst.'}</p></div><div class="actions"><a class="button" href={business.tel}>{business.phone}</a><a class="text-link" href={routes.order[lang]}>{en ? 'Ordering options' : 'Bestellmöglichkeiten'}</a></div></div>
+  </section>
+</Base>

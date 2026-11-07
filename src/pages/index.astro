@@ -1,0 +1,103 @@
+---
+import { ArrowUpRight, Bike, MapPin, Smartphone, Utensils } from 'lucide-react';
+import AppDownload from '../components/AppDownload.astro';
+import SignatureHero from '../components/SignatureHero.astro';
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Hours from '../components/Hours.astro';
+import VisitQuestions from '../components/VisitQuestions.astro';
+import MapBox from '../components/MapBox.astro';
+import { photos } from '../data/photos';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+const features = [
+  { photo: photos.gyros, title: 'Gyros', text: en ? 'With fries, tzatziki and onions.' : 'Mit Pommes, Tzatziki und Zwiebeln.' },
+  { photo: photos.souvlaki, title: 'Souvlaki', text: en ? 'Pork neck skewers with fries, salad and tzatziki.' : 'Schweinenackenspieße mit Pommes, Salat und Tzatziki.' },
+  { photo: photos.bifteki, title: 'Bifteki', text: en ? 'Stuffed with sheep’s cheese, with fries, salad and tzatziki.' : 'Mit Schafskäse gefüllt, dazu Pommes, Salat und Tzatziki.' },
+];
+---
+<Base title={en ? 'Bit Boulevard | Greek Restaurant & Delivery in Gummersbach' : 'Bit Boulevard | Griechisches Restaurant & Lieferservice in Gummersbach'}
+  description={en ? 'Greek restaurant at Brückenstraße 8 in Gummersbach. Explore the menu, book a table, or order gyros, souvlaki and pizza online.' : 'Griechisches Restaurant an der Brückenstraße 8 in Gummersbach. Speisekarte entdecken, Tisch anfragen oder Gyros, Souvlaki und Pizza online bestellen.'}>
+  <SignatureHero lang={lang}/>
+
+  <div class="bb-ribbon" aria-hidden="true">
+    <div>{Array.from({length: 3}, () => <span>GYROS <b>✳</b> SOUVLAKI <b>✳</b> BIFTEKI <b>✳</b> GUMMERSBACH <b>✳</b> </span>)}</div>
+  </div>
+
+  <section class="bb-section light" id="grill">
+    <div class="shell">
+      <div class="bb-section-head"><div><p class="bb-label">01 / {en ? 'From the grill' : 'Vom Grill'}</p><h2>{en ? 'THE GRILL' : 'DER GRILL'}<br/><em>{en ? 'IS ON.' : 'IST AN.'}</em></h2></div><a class="text-link" href={routes.menu[lang]}>{en ? 'Full menu' : 'Ganze Speisekarte'} <ArrowUpRight size={18} aria-hidden="true"/></a></div>
+      <div class="bb-dish-deck" data-deck>
+        <div class="bb-dish-list">
+          {features.map((dish, i) => <div class="bb-dish-item">
+            <h3><button type="button" data-dish={i} aria-pressed={i === 0} aria-controls={`dish-photo-${i}`} hidden><span>0{i+1}</span>{dish.title}<ArrowUpRight size={22} aria-hidden="true"/></button><span data-dish-fallback>{dish.title}</span></h3>
+            <p>{dish.text}</p>
+          </div>)}
+        </div>
+        <div class="bb-dish-photos">
+          {features.map((dish,i) => <figure id={`dish-photo-${i}`} class="bb-dish-photo" data-dish-photo hidden={i!==0}>
+            <Photo photo={{...dish.photo, alt: en ? `Illustrative photograph of ${dish.title}` : dish.photo.alt}}/>
+            <figcaption>0{i+1} / {en ? 'AI illustration' : 'KI-Bildmotiv'}</figcaption>
+          </figure>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-room">
+    <div class="shell bb-room-grid">
+      <figure class="image-frame bb-room-photo" data-reveal><Photo photo={{...photos.room, alt: en ? 'Illustrative image of a tavern with wooden tables and warm lighting' : photos.room.alt}}/><figcaption>{en ? 'AI mood image' : 'KI-Stimmungsbild'}</figcaption></figure>
+      <div>
+        <p class="bb-label">02 / {en ? 'At Brückenstraße 8' : 'An der Brückenstraße 8'}</p>
+        <h2>{en ? 'A TABLE' : 'PLATZ AM'}<br/><em>{en ? 'FOR YOU.' : 'TISCH.'}</em></h2>
+        <p>{en ? 'A quick gyros or dinner with friends? There’s room for both at our Greek tavern in central Gummersbach.' : 'Kurz auf einen Gyros oder den ganzen Abend mit Freunden? Für beides gibt’s im Bit Boulevard einen Tisch. Du findest unsere griechische Gaststätte mitten in Gummersbach.'}</p>
+        <div class="actions"><a class="text-link" href={routes.about[lang]}>{en ? 'About the restaurant' : 'Das Lokal kennenlernen'} <ArrowUpRight size={17} aria-hidden="true"/></a><a class="text-link" href={routes.gallery[lang]}>{en ? 'Gallery' : 'Zur Galerie'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-section bb-order" id="bestellen">
+    <div class="shell">
+      <div class="bb-section-head"><div><p class="bb-label">03 / {en ? 'Delivery & collection' : 'Lieferung & Abholung'}</p><h2>{en ? 'BIT AT' : 'BIT FÜR'}<br/><em>{en ? 'HOME.' : 'ZU HAUSE.'}</em></h2></div><p>{en ? 'See current prices and availability in the ordering portal. Choose delivery or collection there.' : 'Preise und Verfügbarkeit siehst du im Bestellportal. Dort wählst du zwischen Lieferung und Abholung.'}</p></div>
+      <div class="order-board">
+        <a class="order-primary" href={business.order}><Bike aria-hidden="true"/><div><small>01 / WEB</small><strong>{en ? 'Order direct' : 'Direkt bestellen'}</strong><span>{en ? 'Open the ordering portal' : 'Zum Bestellportal'}</span></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={business.lieferando}><Utensils aria-hidden="true"/><div><small>02 / PARTNER</small><strong>Lieferando</strong><span>{en ? 'Open the restaurant profile' : 'Zum Restaurantprofil'}</span></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={business.android}><Smartphone aria-hidden="true"/><div><small>03 / ANDROID</small><strong>{en ? 'Order in the app' : 'In der App bestellen'}</strong><span>Google Play</span></div><ArrowUpRight aria-hidden="true"/></a>
+      </div>
+      <AppDownload lang={lang}/>
+      <div class="order-apps"><a class="text-link" href={business.ios}>{en ? "Download for iPhone" : "Für iPhone laden"} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+      <a class="text-link delivery-site" href={business.deliverySite}>{en ? 'About the delivery service' : 'Zur Website des Lieferdienstes'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+    </div>
+  </section>
+
+  <VisitQuestions lang={lang}/>
+
+  <section class="bb-section light bb-visit" id="besuch">
+    <div class="shell">
+      <div class="bb-section-head"><div><p class="bb-label">05 / {en ? 'Your visit' : 'Dein Besuch'}</p><h2>{en ? 'NEXT STOP:' : 'NÄCHSTER HALT:'}<br/><em>{en ? 'BOULEVARD.' : 'BOULEVARD.'}</em></h2></div></div>
+      <div class="bb-visit-grid">
+        <div><address><MapPin size={19} aria-hidden="true"/><span>{business.street}<br/>{business.postalCode} {business.city}</span></address><Hours lang={lang}/><div class="actions"><a class="button button-dark" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'} <ArrowUpRight size={17} aria-hidden="true"/></a><a class="text-link" href={business.tel}>{business.phone}</a></div></div>
+        <MapBox lang={lang}/>
+      </div>
+    </div>
+  </section>
+</Base>
+<script>
+  import '../lib/motion';
+  const deck = document.querySelector('[data-deck]');
+  const buttons = [...(deck?.querySelectorAll<HTMLButtonElement>('[data-dish]') ?? [])];
+  const figures = [...(deck?.querySelectorAll<HTMLElement>('[data-dish-photo]') ?? [])];
+  for (const label of deck?.querySelectorAll<HTMLElement>('[data-dish-fallback]') ?? []) label.hidden = true;
+  buttons.forEach((button, index) => {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      buttons.forEach((item, i) => item.setAttribute('aria-pressed', String(i === index)));
+      figures.forEach((item, i) => { item.hidden = i !== index; });
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        figures[index]?.animate([{ opacity: .35, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'ease-out' });
+      }
+    });
+  });
+</script>

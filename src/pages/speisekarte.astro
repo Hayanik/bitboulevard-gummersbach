@@ -1,0 +1,21 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import MenuExplorer from '../components/MenuExplorer';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+---
+<Base title={en ? 'Menu | Bit Boulevard Gummersbach' : 'Speisekarte | Bit Boulevard Gummersbach'}
+  description={en ? 'Greek favourites, starters, pizza, meat dishes and drinks at Bit Boulevard in Gummersbach.' : 'Griechische Klassiker, Vorspeisen, Pizza, Fleischgerichte und Getränke bei Bit Boulevard in Gummersbach entdecken.'}>
+  <PageHead label={en ? 'From the kitchen' : 'Aus der Küche'} title={en ? 'THE MENU.' : 'DIE KARTE.'} description={en ? 'From tzatziki to the mixed grill. Explore the dishes on our online menu.' : 'Von Tzatziki bis Grillteller. Entdecke das Angebot aus unserer Online-Karte.'}/>
+  <div class="light content-section">
+    <div class="shell">
+      <div class="menu-note"><p>{en ? 'For online prices, see the ordering portal. For dine-in prices and allergen information, please call ' : 'Die Online-Preise findest du im Bestellportal. Zu Preisen vor Ort und Allergenen hilft dir unser Team unter '}<a href={business.tel}>{business.phone}</a>{en ? '.' : ' weiter.'}</p><a class="button button-dark" href={business.order}>{en ? 'Order direct' : 'Direkt bestellen'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+      <a class="text-link" href={routes.kitchen[lang]}>{en ? 'A guide to our kitchen' : 'Ein Wegweiser zur Küche'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+      <MenuExplorer client:load lang={lang}/>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,54 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import { photos } from '../data/photos';
+import Hours from '../components/Hours.astro';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+---
+<Base title={en ? 'The Restaurant | Bit Boulevard Gummersbach' : 'Das Lokal | Bit Boulevard Gummersbach'}
+  description={en ? 'Get to know Bit Boulevard, a Greek tavern in central Gummersbach.' : 'Lerne Bit Boulevard kennen, eine griechische Gaststätte mitten in Gummersbach.'}>
+  <PageHead label={en ? 'The restaurant' : 'Das Lokal'} title={en ? 'GREEK KITCHEN.' : 'GRIECHISCHE KÜCHE.'} accent={en ? 'LOCAL TABLE.' : 'LOKALE RUNDE.'}/>
+  <section class="light content-section">
+    <div class="shell story-grid">
+      <figure class="image-frame"><Photo photo={{...photos.room, alt: en ? 'Illustrative image of a warmly lit tavern' : photos.room.alt}}/><figcaption>{en ? 'AI mood image' : 'KI-Stimmungsbild'}</figcaption></figure>
+      <div><p class="eyebrow">{en ? 'On Brückenstraße' : 'An der Brückenstraße'}</p><h2>{en ? 'Room to ' : 'Platz zum '}<em>{en ? 'sit together.' : 'Zusammensitzen.'}</em></h2>
+        <p>{en ? 'Bit Boulevard is a Greek tavern. Some guests come for gyros, souvlaki or bifteki. Others get together over pizza and a beer.' : 'Bit Boulevard ist eine griechische Gaststätte. Die einen kommen auf Gyros, Souvlaki oder Bifteki. Die anderen treffen sich zu Pizza und einem Bier.'}</p>
+        <p>{en ? 'You’ll find us on Brückenstraße, right in central Gummersbach. Stop by for a meal or get in touch to book your next evening with friends.' : 'Du findest uns in der Brückenstraße, mitten in Gummersbach. Komm zum Essen vorbei oder frag einen Tisch für deinen nächsten Abend mit Freunden an.'}</p>
+        <a class="text-link" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+      </div>
+    </div>
+  </section>
+  <section class="light content-section">
+    <div class="shell editorial-split">
+      <div><p class="eyebrow">02 / {en ? 'On the table' : 'Auf dem Tisch'}</p><h2>{en ? 'Start with tzatziki.' : 'Erst mal Tzatziki.'}</h2>
+        <p>{en ? 'Start with tzatziki or saganaki, then move on to souvlaki, bifteki or a mixed grill. There’s pizza on the menu too, including the Bit Boulevard with gyros.' : 'Zum Auftakt Tzatziki oder Saganaki, danach Souvlaki, Bifteki oder ein Grillteller. Auf der Karte steht auch Pizza, darunter die Bit Boulevard mit Gyros.'}</p>
+        <a class="text-link" href={routes.menu[lang]}>{en ? 'Browse the menu' : 'Speisekarte ansehen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+      </div>
+      <figure class="image-frame"><Photo photo={{...photos.souvlaki, alt: en ? 'Illustration of grilled souvlaki with lemon' : photos.souvlaki.alt}}/><figcaption>{en ? 'AI illustration' : 'KI-Bildmotiv'}</figcaption></figure>
+    </div>
+  </section>
+  <section class="light content-section">
+    <div class="shell editorial-split">
+      <div><p class="eyebrow">03 / {en ? 'Plan your evening' : 'Dein Abend im Bit'}</p><h2>{en ? 'A table for the group.' : 'Ein Tisch für die Runde.'}</h2>
+        <p>{en ? 'Call us with your preferred time and group size. If you’re eating at home, you can order for collection or delivery.' : 'Für eine Tischanfrage ruf uns mit deiner Wunschuhrzeit und Personenzahl an. Wer zu Hause essen möchte, kann zur Abholung oder Lieferung bestellen.'}</p>
+        <div class="actions"><a class="button button-dark" href={business.tel}>{business.phone}</a><a class="text-link" href={routes.order[lang]}>{en ? 'Ordering options' : 'Bestellmöglichkeiten'}</a></div>
+      </div>
+      <div><Hours lang={lang}/><a class="text-link" href={routes.directions[lang]}>{en ? 'Find us on Brückenstraße' : 'So findest du uns an der Brückenstraße'} <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+    </div>
+  </section>
+  <section class="bb-questions content-section">
+    <div class="shell">
+      <div class="gallery-intro"><div><p class="eyebrow">04 / {en ? 'Your way to Bit' : 'Dein Weg ins Bit'}</p><h2>{en ? 'From the first round to the last bite.' : 'Von der ersten Runde bis zum letzten Bissen.'}</h2></div><p>{en ? 'Choose how you want to spend your evening. Each route takes you straight to the details you need.' : 'Such dir aus, wie du deinen Abend verbringen möchtest. Hier findest du die passenden Infos für deinen Besuch oder deine Bestellung.'}</p></div>
+      <div class="editorial-links">
+        <a href={routes.contact[lang]+'#tisch'}><small>01</small><div><strong>{en ? 'Dinner at the restaurant' : 'Abendessen im Lokal'}</strong><p>{en ? 'Ask about a table and tell us when you want to come.' : 'Frag einen Tisch für deine Runde an und nenne uns deinen Wunschtermin.'}</p></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={routes.kitchen[lang]}><small>02</small><div><strong>{en ? 'Find a dish' : 'Ein Gericht finden'}</strong><p>{en ? 'Get to know the starters, grill dishes and pizzas before you decide.' : 'Lerne Vorspeisen, Grillgerichte und Pizzen kennen, bevor du dich entscheidest.'}</p></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={routes.order[lang]}><small>03</small><div><strong>{en ? 'Dinner at home' : 'Essen für zu Hause'}</strong><p>{en ? 'Check delivery for your address or arrange collection at Brückenstraße 8.' : 'Prüf, ob wir an deine Adresse liefern, oder hol die Bestellung an der Brückenstraße 8 ab.'}</p></div><ArrowUpRight aria-hidden="true"/></a>
+      </div>
+    </div>
+  </section>
+</Base>

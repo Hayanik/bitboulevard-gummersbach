@@ -1,0 +1,29 @@
+---
+import { routes, type Route } from '../../config/locale';
+import Home from '../index.astro';
+import Menu from '../speisekarte.astro';
+import About from '../ueber-uns.astro';
+import Gallery from '../galerie.astro';
+import Contact from '../kontakt.astro';
+import Legal from '../impressum.astro';
+import Privacy from '../datenschutz.astro';
+
+import Accessibility from '../barrierefreiheit.astro';
+import Directions from '../anfahrt.astro';
+import Order from '../bestellen.astro';
+
+import FAQ from '../fragen.astro';
+import Kitchen from '../kueche.astro';
+
+import AppDownload from '../app.astro';
+
+const pages = { home: Home, menu: Menu, about: About, gallery: Gallery, contact: Contact, legal: Legal, privacy: Privacy, accessibility: Accessibility, directions: Directions, order: Order, faq: FAQ, kitchen: Kitchen, app: AppDownload };
+export function getStaticPaths() {
+  return (Object.keys(routes) as Route[]).map(key => ({
+    params: { page: key === 'home' ? undefined : routes[key].en.slice(4, -1) },
+    props: { key },
+  }));
+}
+const Page = pages[Astro.props.key as Route];
+---
+<Page/>

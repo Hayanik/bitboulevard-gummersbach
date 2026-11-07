@@ -1,0 +1,50 @@
+---
+import { ArrowUpRight, Plus } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { business } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+const groups = [
+  { id: 'besuch', title: en ? 'Visiting the restaurant' : 'Besuch im Lokal', items: en ? [
+    ['How do I request a table?', 'Call or email with the date, time and number of guests. For email enquiries, wait for our reply before treating the table as booked.', routes.contact.en+'#tisch', 'Contact and table enquiries'],
+    ['Where is Bit Boulevard?', 'At Brückenstraße 8, 51643 Gummersbach. Our directions page has the address, the restaurant pin and a route link.', routes.directions.en, 'Directions and map'],
+    ['When is the kitchen open?', 'Our published kitchen hours are Tuesday to Saturday 17:00–22:00 and Sunday 15:00–21:00. The kitchen is closed on Mondays. For restaurant opening hours or changes, please call.', business.tel, business.phone],
+  ] : [
+    ['Wie frage ich einen Tisch an?', 'Ruf an oder schreib uns mit Datum, Uhrzeit und Personenzahl. Bei einer E-Mail-Anfrage gilt der Tisch erst nach unserer Rückmeldung als bestätigt.', routes.contact.de+'#tisch', 'Kontakt und Tischanfrage'],
+    ['Wo finde ich Bit Boulevard?', 'In der Brückenstraße 8, 51643 Gummersbach. Auf der Anfahrtsseite findest du die Adresse, den Karten-Pin und einen Routenlink.', routes.directions.de, 'Anfahrt und Karte'],
+    ['Wann hat die Küche geöffnet?', 'Die veröffentlichten Küchenzeiten sind Dienstag bis Samstag 17:00–22:00 Uhr und Sonntag 15:00–21:00 Uhr. Montags ist Ruhetag. Die Öffnungszeiten des Lokals und mögliche Änderungen erfragst du telefonisch.', business.tel, business.phone],
+  ] },
+  { id: 'speisen', title: en ? 'Menu and ordering' : 'Speisekarte und Bestellung', items: en ? [
+    ['Can I collect my order?', 'Yes. In the direct ordering portal, choose collection or delivery before placing the order. The collection address is Brückenstraße 8.', routes.order.en, 'Ordering options'],
+    ['Where can I see prices and delivery fees?', 'The ordering portal shows current online prices, delivery availability and any fees. Ask the restaurant about dine-in prices.', business.order, 'Direct ordering portal'],
+    ['Who can answer allergen questions?', 'Please call before ordering and tell us which dish you’re asking about. The restaurant team can help you check the current ingredients.', business.tel, business.phone],
+  ] : [
+    ['Kann ich meine Bestellung abholen?', 'Ja. Im direkten Bestellportal wählst du vor der Bestellung zwischen Abholung und Lieferung. Die Abholadresse ist Brückenstraße 8.', routes.order.de, 'Bestellmöglichkeiten'],
+    ['Wo sehe ich Preise und Lieferkosten?', 'Aktuelle Online-Preise, Lieferverfügbarkeit und mögliche Gebühren stehen im Bestellportal. Preise für den Verzehr vor Ort erfragst du im Lokal.', business.order, 'Direktes Bestellportal'],
+    ['Wer hilft mir bei Fragen zu Allergenen?', 'Ruf bitte vor der Bestellung an und nenne das Gericht, für das du Informationen brauchst. Das Team kann dir zu den aktuellen Zutaten Auskunft geben.', business.tel, business.phone],
+  ] },
+  { id: 'zugang', title: en ? 'Access and website' : 'Zugang und Website', items: en ? [
+    ['Who can help with access to the restaurant?', 'Call before visiting if you need information about access or a table that suits your needs.', business.tel, business.phone],
+    ['Can I get directions without loading the map?', 'Yes. The directions page provides the address and an external route link. The embedded map loads only when you allow it.', routes.directions.en, 'Directions'],
+    ['How do I report a website barrier?', 'Send us the page address and a brief description. Our accessibility page has an email template.', routes.accessibility.en+'#feedback', 'Report a barrier'],
+  ] : [
+    ['Wer hilft mir bei Fragen zum Zugang vor Ort?', 'Ruf uns vor deinem Besuch an, wenn du Informationen zum Zugang oder einen passenden Tisch brauchst.', business.tel, business.phone],
+    ['Kann ich die Route ohne eingebettete Karte planen?', 'Ja. Auf der Anfahrtsseite stehen die Adresse und ein externer Routenlink. Die eingebettete Karte wird erst nach deiner Freigabe geladen.', routes.directions.de, 'Anfahrt'],
+    ['Wie melde ich eine Barriere auf der Website?', 'Schick uns die betroffene Seite und eine kurze Beschreibung. Auf der Barrierefreiheitsseite findest du eine E-Mail-Vorlage.', routes.accessibility.de+'#feedback', 'Barriere melden'],
+  ] },
+];
+---
+<Base title={en ? 'Frequently Asked Questions | Bit Boulevard' : 'Häufige Fragen | Bit Boulevard'} description={en ? 'Answers about table enquiries, kitchen hours, collection, prices and visiting Bit Boulevard.' : 'Antworten zu Tischanfragen, Küchenzeiten, Abholung, Preisen und deinem Besuch im Bit Boulevard.'}>
+  <PageHead label={en ? 'Plan your visit' : 'Deinen Besuch planen'} title={en ? 'GOOD TO KNOW.' : 'GUT ZU WISSEN.'} description={en ? 'From booking a table to collecting an order.' : 'Von der Tischanfrage bis zur Abholung.'}/>
+  <section class="light content-section">
+    <div class="shell legal-grid editorial-index-grid">
+      <nav class="legal-index" aria-label={en ? 'Question topics' : 'Fragen nach Themen'}><p class="eyebrow">{en ? 'Topics' : 'Themen'}</p><ol>{groups.map(group => <li><a href={'#'+group.id}>{group.title}</a></li>)}</ol></nav>
+      <div>{groups.map(group => <section class="faq-group" id={group.id}>
+        <h2>{group.title}</h2>
+        {group.items.map(([question,answer,href,label]) => <details><summary>{question}<Plus size={20} aria-hidden="true"/></summary><p>{answer}</p><a class="text-link" href={href}>{label} <ArrowUpRight size={16} aria-hidden="true"/></a></details>)}
+      </section>)}</div>
+    </div>
+  </section>
+</Base>

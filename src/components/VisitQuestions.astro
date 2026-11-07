@@ -1,0 +1,30 @@
+---
+import { Plus, ArrowUpRight } from 'lucide-react';
+import { business } from '../config/business';
+import { routes, type Language } from '../config/locale';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+const entries = en ? [
+  ['Can I book a table?', 'Yes. Call us or send an email with your preferred date, time and number of guests. Email enquiries are confirmed when we reply.'],
+  ['Can I collect my order?', 'Yes. Choose collection or delivery in our online ordering portal. The portal shows availability for your address.'],
+  ['Where can I check prices and allergens?', 'The ordering portal shows current online prices. For allergens and prices in the restaurant, please call the team.'],
+] : [
+  ['Kann ich einen Tisch reservieren?', 'Ja. Ruf uns an oder nenne uns per E-Mail deinen Wunschtermin und die Personenzahl. Eine Anfrage per E-Mail gilt erst nach unserer Rückmeldung als bestätigt.'],
+  ['Kann ich meine Bestellung abholen?', 'Ja. Im Bestellportal kannst du zwischen Abholung und Lieferung wählen. Dort siehst du auch, ob eine Lieferung an deine Adresse möglich ist.'],
+  ['Wo finde ich Preise und Allergene?', 'Die aktuellen Online-Preise stehen im Bestellportal. Zu Allergenen und Preisen im Lokal gibt dir unser Team telefonisch Auskunft.'],
+];
+const links = [routes.contact[lang]+'#tisch', business.order, business.tel];
+const labels = en ? ['Ask for a table', 'Order online', 'Call the restaurant'] : ['Tisch anfragen', 'Online bestellen', 'Im Lokal anrufen'];
+---
+<section class="bb-questions">
+  <div class="shell bb-questions-grid">
+    <div><p class="bb-label">04 / {en ? 'Good to know' : 'Gut zu wissen'}</p><h2>{en ? 'ANY' : 'NOCH'}<br/><em>{en ? 'QUESTIONS?' : 'FRAGEN?'}</em></h2></div>
+    <div class="bb-answers">
+      {entries.map(([question,answer],i) => <details>
+        <summary><small>0{i+1}</small><span>{question}</span><Plus size={20} aria-hidden="true"/></summary>
+        <p>{answer}</p><a class="text-link" href={links[i]}>{labels[i]} <ArrowUpRight size={16} aria-hidden="true"/></a>
+      </details>)}
+      <a class="text-link" href={routes.faq[lang]}>{en ? 'All frequently asked questions' : 'Alle häufigen Fragen'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+    </div>
+  </div>
+</section>

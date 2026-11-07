@@ -1,0 +1,41 @@
+---
+import { ArrowUpRight, Phone, Mail } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Hours from '../components/Hours.astro';
+import { business, booking } from '../config/business';
+import { language, routes } from '../config/locale';
+const lang = language(Astro.url.pathname);
+const en = lang === 'en';
+---
+<Base title={en ? 'Contact, Directions & Reservations | Bit Boulevard' : 'Kontakt, Anfahrt & Tischanfrage | Bit Boulevard'}
+  description={en ? 'Visit Bit Boulevard at Brückenstraße 8 in Gummersbach. Find directions or enquire about a table by phone or email.' : 'Bit Boulevard, Brückenstraße 8 in Gummersbach. Route planen, anrufen oder einen Tisch per E-Mail anfragen.'}>
+  <PageHead label={en ? 'Visit Bit Boulevard' : 'Zu Gast im Boulevard'} title={en ? 'SEE YOU' : 'BIS GLEICH'} accent={en ? 'IN GUMMERSBACH.' : 'IN GUMMERSBACH.'}/>
+  <section class="light content-section">
+    <div class="shell contact-grid">
+      <div id="tisch">
+        <p class="eyebrow">{en ? 'Reservations' : 'Reservierung'}</p><h2>{en ? 'A table ' : 'Ein Tisch '}<em>{en ? 'for you.' : 'für euch.'}</em></h2>
+        <p>{en ? 'Please include your preferred date, time and number of guests. Email enquiries are confirmed once you hear back from us.' : 'Nenne bei deiner Anfrage Datum, Uhrzeit und Personenzahl. Eine Anfrage per E-Mail gilt erst nach unserer Rückmeldung als bestätigt.'}</p>
+        <div class="actions"><a class="button button-dark" href={business.tel}><Phone size={17} aria-hidden="true"/> {en ? 'Call us' : 'Jetzt anrufen'}</a><a class="button button-light-outline" href={booking(lang)}><Mail size={17} aria-hidden="true"/> {en ? 'Email us' : 'Per E-Mail anfragen'}</a></div>
+        <div class="contact-lines"><a href={business.tel}>{business.phone}</a><a href={`mailto:${business.email}`}>{business.email}</a></div>
+        <Hours lang={lang}/>
+      </div>
+      <aside class="contact-aside">
+        <p class="eyebrow">{en ? 'Visit in person' : 'Persönlich vorbeikommen'}</p>
+        <h2>{en ? 'Find us in Gummersbach.' : 'Mitten in Gummersbach.'}</h2>
+        <address>{business.street}<br/>{business.postalCode} {business.city}</address>
+        <a class="text-link" href={routes.directions[lang]}>{en ? 'Directions and Google Maps' : 'Anfahrt und Google Maps'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+        <a class="text-link" href={routes.accessibility[lang]+'#feedback'}>{en ? 'Report an accessibility barrier' : 'Eine Barriere auf der Website melden'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+      </aside>
+    </div>
+  </section>
+  <section class="bb-questions content-section">
+    <div class="shell">
+      <div class="gallery-intro"><div><p class="eyebrow">{en ? 'Other enquiries' : 'Weitere Anliegen'}</p><h2>{en ? 'The right contact.' : 'Der passende Kontakt.'}</h2></div><p>{en ? 'For questions about ingredients or your visit, speak to us directly. For an order already placed, keep its confirmation handy and use the contact option shown there.' : 'Bei Fragen zu Zutaten oder deinem Besuch helfen wir dir direkt. Wenn du schon bestellt hast, halte deine Bestellbestätigung bereit und nutze den dort angegebenen Kontaktweg.'}</p></div>
+      <div class="editorial-links">
+        <a href={business.tel}><small>01</small><div><strong>{en ? 'Ingredients and access' : 'Zutaten und Zugang'}</strong><p>{en ? 'Ask the restaurant before your visit or order.' : 'Frag vor deinem Besuch oder deiner Bestellung beim Lokal nach.'}</p></div><ArrowUpRight aria-hidden="true"/></a>
+        <a href={routes.faq[lang]}><small>02</small><div><strong>{en ? 'Frequently asked questions' : 'Häufige Fragen'}</strong><p>{en ? 'See answers about hours, collection and table enquiries.' : 'Lies Antworten zu Küchenzeiten, Abholung und Tischanfragen.'}</p></div><ArrowUpRight aria-hidden="true"/></a>
+      </div>
+    </div>
+  </section>
+</Base>

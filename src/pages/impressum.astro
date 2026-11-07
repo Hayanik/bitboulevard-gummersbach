@@ -1,0 +1,20 @@
+---
+import LegalLayout from '../components/LegalLayout.astro';
+import LegalSection from '../components/LegalSection.astro';
+import { business } from '../config/business';
+import { language } from '../config/locale';
+const en = language(Astro.url.pathname) === 'en';
+const sections = [
+  { id: 'anbieter', label: en ? 'Service provider' : 'Diensteanbieter' },
+  { id: 'kontakt', label: en ? 'Contact details' : 'Kontaktangaben' },
+];
+---
+<LegalLayout title={en ? 'Legal Notice | Bit Boulevard' : 'Impressum | Bit Boulevard'} heading={en ? 'Legal notice.' : 'Impressum.'}
+  description={en ? 'Provider information under Section 5 of the German Digital Services Act (DDG).' : 'Anbieterangaben gemäß § 5 Digitale-Dienste-Gesetz (DDG).'} {sections}>
+  <LegalSection id={sections[0].id} title={sections[0].label} number="01">
+    <address><strong>{business.name}</strong><br/>{en ? 'Owner' : 'Inhaber'} {business.owner}<br/>{business.street}<br/>{business.postalCode} {business.city}<br/>{en ? 'Germany' : 'Deutschland'}</address>
+  </LegalSection>
+  <LegalSection id={sections[1].id} title={sections[1].label} number="02">
+    <div class="legal-contact"><a href={business.tel}>{business.phone}</a><br/><a href={`mailto:${business.email}`}>{business.email}</a></div>
+  </LegalSection>
+</LegalLayout>

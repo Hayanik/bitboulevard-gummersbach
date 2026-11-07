@@ -1,0 +1,46 @@
+---
+import LegalLayout from '../components/LegalLayout.astro';
+import LegalSection from '../components/LegalSection.astro';
+import { business } from '../config/business';
+import { language } from '../config/locale';
+const en = language(Astro.url.pathname) === 'en';
+const sections = [
+  { id: 'verantwortlich', label: en ? 'Controller' : 'Verantwortlicher' },
+  { id: 'hosting', label: en ? 'Website hosting' : 'Bereitstellung der Website' },
+  { id: 'kontakt', label: en ? 'Contact and bookings' : 'Kontakt und Tischanfragen' },
+  { id: 'speicher', label: en ? 'Cookies and browser storage' : 'Cookies und Browserspeicher' },
+  { id: 'karten', label: en ? 'Google Maps' : 'Google Maps' },
+  { id: 'dienste', label: en ? 'External services' : 'Externe Dienste' },
+  { id: 'rechte', label: en ? 'Your rights' : 'Deine Rechte' },
+];
+---
+<LegalLayout title={en ? 'Privacy | Bit Boulevard' : 'Datenschutz | Bit Boulevard'} heading={en ? 'Privacy.' : 'Datenschutz.'}
+  description={en ? 'How we process data when you use our website or contact us.' : 'Wie wir Daten beim Besuch der Website und bei einer Kontaktaufnahme verarbeiten.'} {sections} draft>
+  <LegalSection id={sections[0].id} title={sections[0].label} number="01">
+    <address>{business.owner} · {business.name}<br/>{business.street}<br/>{business.postalCode} {business.city}<br/><a href={`mailto:${business.email}`}>{business.email}</a><br/><a href={business.tel}>{business.phone}</a></address>
+  </LegalSection>
+  <LegalSection id={sections[1].id} title={sections[1].label} number="02">
+    <p class="legal-note">{en ? 'Pre-launch draft. The hosting provider, server log fields, storage period and any international transfers will be confirmed before publication.' : 'Vorabfassung. Hosting-Anbieter, protokollierte Zugriffsdaten, Speicherdauer und etwaige Drittlandübermittlungen werden vor Veröffentlichung anhand des gewählten Hostings ergänzt.'}</p>
+    <p>{en ? 'To serve the website, the server receives technical information including your IP address and the requested resource. Our purpose is to deliver the site and keep it secure. The legal basis for this processing is our legitimate interest under Article 6(1)(f) GDPR.' : 'Für die Auslieferung der Website erhält der Server technische Angaben wie deine IP-Adresse und die angeforderte Ressource. Zweck ist die Bereitstellung und der sichere Betrieb. Rechtsgrundlage ist unser berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO.'}</p>
+  </LegalSection>
+  <LegalSection id={sections[2].id} title={sections[2].label} number="03">
+    <p>{en ? 'When you email or call us, we use the contact details and information you provide to answer your request. For table enquiries this includes the requested date, time and group size. Article 6(1)(b) GDPR applies where this relates to a contract or a step you request before entering into one. For other enquiries we rely on our legitimate interest in replying under Article 6(1)(f) GDPR.' : 'Wenn du uns anrufst oder schreibst, verarbeiten wir deine Kontaktdaten und Angaben zur Bearbeitung deiner Anfrage. Bei Tischanfragen gehören dazu Termin und Personenzahl. Bei vertragsbezogenen und von dir gewünschten vorvertraglichen Anfragen gilt Art. 6 Abs. 1 lit. b DSGVO. Andere Anfragen beantworten wir auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO.'}</p>
+    <p>{en ? 'We keep enquiries as long as necessary to handle them and, where required, for applicable statutory retention periods. Without the details needed to handle a request, we may be unable to respond or arrange a table.' : 'Wir bewahren Anfragen so lange auf, wie es für die Bearbeitung und gegebenenfalls zur Erfüllung gesetzlicher Aufbewahrungspflichten erforderlich ist. Ohne die notwendigen Angaben können wir eine Anfrage gegebenenfalls nicht beantworten oder keinen Tisch vermitteln.'}</p>
+  </LegalSection>
+  <LegalSection id={sections[3].id} title={sections[3].label} number="04">
+    <p>{en ? 'The website code sets no first-party cookies and includes no analytics or advertising scripts. When you switch the theme yourself, “bb-theme” stores only that choice locally until you change or clear it. “bb-maps-consent-v1” stores your map choice for the current browser tab. These settings implement the preferences you explicitly select (§ 25(2) no. 2 TDDDG).' : 'Der Website-Code setzt keine eigenen Cookies und enthält keine Analyse- oder Werbeskripte. Wenn du das Farbschema selbst wechselst, speichert „bb-theme“ nur deine Auswahl lokal bis zur Änderung oder Löschung. „bb-maps-consent-v1“ speichert deine Kartenentscheidung für den aktuellen Browser-Tab. Die Einträge dienen der Umsetzung der von dir ausdrücklich gewählten Einstellungen (§ 25 Abs. 2 Nr. 2 TDDDG).'}</p>
+    <p>{en ? 'Google may use cookies or similar storage after you enable the map. You can clear locally stored website preferences in your browser.' : 'Google kann nach der Freigabe der Karte Cookies oder ähnliche Speichertechniken einsetzen. Die lokal gespeicherten Website-Einstellungen kannst du in deinem Browser löschen.'}</p>
+  </LegalSection>
+  <LegalSection id={sections[4].id} title={sections[4].label} number="05">
+    <p>{en ? 'We use the optional Google Maps embed to show the restaurant’s location. Once you consent and load the map, your browser sends Google technical data such as your IP address. For users in the EEA, Google identifies Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland, as its service provider. Google may process data outside the EEA, including in the United States. Google’s privacy policy explains its processing, retention periods and transfer safeguards.' : 'Die optionale Google-Maps-Einbettung zeigt den Standort des Restaurants. Wenn du einwilligst und die Karte lädst, übermittelt dein Browser Google technische Daten wie deine IP-Adresse. Für Nutzer im EWR nennt Google als Anbieter Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Google kann Daten auch außerhalb des EWR verarbeiten, etwa in den USA. Informationen zu Verarbeitung, Speicherdauer und Garantien für Übermittlungen findest du bei Google.'} <a href={en ? 'https://policies.google.com/privacy?hl=en' : 'https://policies.google.com/privacy?hl=de'}>{en ? 'Google privacy policy ↗' : 'Datenschutzerklärung von Google ↗'}</a></p>
+    <p>{en ? 'The legal basis for the optional embed is your consent under Article 6(1)(a) GDPR and, where information is stored or accessed on your device, § 25(1) TDDDG. To withdraw consent for the future, open Privacy settings and select “Keep blocked”. This removes the embed and blocks further loads. It does not delete data already received by Google.' : 'Rechtsgrundlage für die optionale Einbettung ist deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und, soweit auf deinem Endgerät gespeichert oder darauf zugegriffen wird, § 25 Abs. 1 TDDDG. Du kannst die Einwilligung für die Zukunft widerrufen. Öffne dazu die Datenschutzeinstellungen und wähle „Blockiert lassen“. Die Einbettung wird entfernt und bleibt blockiert. Bereits an Google übermittelte Daten werden dadurch nicht gelöscht.'}</p>
+    <button type="button" class="footer-privacy-button" data-privacy-open hidden>{en ? 'Open privacy settings' : 'Datenschutzeinstellungen öffnen'}</button>
+  </LegalSection>
+  <LegalSection id={sections[5].id} title={sections[5].label} number="06">
+    <p>{en ? 'Links to ordering services, app stores and external directions open the respective provider’s website or app. Those providers publish their own privacy notices. We do not embed these services when you visit our site.' : 'Links zu Bestelldiensten, App-Stores und externen Routen öffnen die Website oder App des jeweiligen Anbieters. Dort gelten dessen Datenschutzhinweise. Beim Besuch unserer Website werden diese Dienste nicht eingebunden.'}</p>
+  </LegalSection>
+  <LegalSection id={sections[6].id} title={sections[6].label} number="07">
+    <p>{en ? 'Subject to the GDPR, you may request access, rectification, erasure, restriction or data portability (Articles 15–20). You may object to processing based on legitimate interests (Article 21) and withdraw consent at any time with effect for the future (Article 7(3)).' : 'Unter den Voraussetzungen der DSGVO kannst du Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit verlangen (Art. 15–20). Gegen eine Verarbeitung auf Grundlage berechtigter Interessen kannst du Widerspruch einlegen (Art. 21). Eine Einwilligung kannst du jederzeit mit Wirkung für die Zukunft widerrufen (Art. 7 Abs. 3).'}</p>
+    <p>{en ? 'You may lodge a complaint with a data protection authority under Article 77 GDPR. In North Rhine-Westphalia, you can contact the state data protection authority.' : 'Du hast außerdem ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde nach Art. 77 DSGVO. In Nordrhein-Westfalen kannst du dich an die Landesbeauftragte für Datenschutz und Informationsfreiheit wenden.'} <a href="https://www.ldi.nrw.de/kontakt/ihre-beschwerde">LDI NRW ↗</a></p>
+  </LegalSection>
+</LegalLayout>

@@ -1,0 +1,52 @@
+---
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+import ThemeSwitch from './ThemeSwitch.astro';
+import { alternate, language, navigation, routes } from '../config/locale';
+const current = Astro.url.pathname;
+const lang = language(current);
+const en = lang === 'en';
+const nav = navigation(lang);
+---
+<header class="site-header" data-header>
+  <a class="brand" href={routes.home[lang]} aria-label={en ? 'Bit Boulevard home' : 'Bit Boulevard Startseite'}>
+    <span class="brand-sigil" aria-hidden="true">B<span>B</span></span><span>BIT<br/>BOULEVARD<span class="brand-dot">.</span></span>
+  </a>
+  <nav class="desktop-nav" aria-label={en ? 'Main navigation' : 'Hauptnavigation'}>
+    {nav.map(({href,label}) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
+  </nav>
+  <div class="header-actions">
+    <ThemeSwitch lang={lang}/>
+    <a class="lang-switch" href={alternate(current)} hreflang={en ? 'de' : 'en'} lang={en ? 'de' : 'en'} aria-label={en ? 'Auf Deutsch lesen' : 'Read in English'}>{en ? 'DE' : 'EN'}</a>
+    <a class="button button-small" href={routes.order[lang]}>{en ? 'Order online' : 'Online bestellen'} <ArrowUpRight size={16} aria-hidden="true"/></a>
+  </div>
+  <button type="button" class="icon-button mobile-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label={en ? 'Open menu' : 'Menü öffnen'} hidden><Menu aria-hidden="true"/></button>
+</header>
+<dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-title">
+  <div class="mobile-top"><span id="mobile-title" class="eyebrow">Bit Boulevard</span><button type="button" class="icon-button" data-close autofocus aria-label={en ? 'Close menu' : 'Menü schließen'}><X aria-hidden="true"/></button></div>
+  <nav aria-label={en ? 'Mobile navigation' : 'Mobile Hauptnavigation'}>
+    {nav.map(({href,label},i) => <a href={href} aria-current={current === href ? 'page' : undefined}><small>0{i+1}</small>{label}</a>)}
+  </nav>
+  <div class="actions"><a class="button" href={routes.order[lang]}>{en ? 'Order online' : 'Online bestellen'} <ArrowUpRight size={17} aria-hidden="true"/></a><a class="button button-outline" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'}</a></div>
+</dialog>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.mobile-toggle');
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+  if (toggle && menu) {
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      menu.showModal();
+      toggle.setAttribute('aria-expanded', 'true');
+    });
+    menu.addEventListener('close', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      if (toggle.getClientRects().length) toggle.focus();
+    });
+    menu.querySelector('[data-close]')?.addEventListener('click', () => menu.close());
+    menu.addEventListener('click', event => {
+      if (event.target instanceof Element && event.target.closest('a')) menu.close();
+    });
+    window.matchMedia('(min-width: 961px)').addEventListener('change', event => {
+      if (event.matches && menu.open) menu.close();
+    });
+  }
+</script>

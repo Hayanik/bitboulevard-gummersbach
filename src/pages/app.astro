@@ -1,0 +1,26 @@
+---
+import { ArrowUpRight, Smartphone } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { business } from '../config/business';
+import { language } from '../config/locale';
+const en = language(Astro.url.pathname) === 'en';
+---
+<Base title={en ? 'Get the Bit Boulevard App' : 'Bit-Boulevard-App herunterladen'} description={en ? 'Download the Bit Boulevard app for iPhone or Android.' : 'Lade die Bit-Boulevard-App für iPhone oder Android herunter.'}>
+  <PageHead label={en ? 'The Bit Boulevard app' : 'Die Bit-Boulevard-App'} title={en ? 'BIT TO GO.' : 'BIT FÜR UNTERWEGS.'} description={en ? 'Open the app in the store for your phone.' : 'Öffne die App im Store für dein Handy.'}/>
+  <section class="light content-section">
+    <div class="shell app-landing" data-app-landing data-ios={business.ios} data-android={business.android}>
+      <Smartphone size={34} aria-hidden="true"/>
+      <h2>{en ? 'Choose your app store.' : 'Wähle deinen App-Store.'}</h2>
+      <p>{en ? 'On iPhone and Android, we’ll take you to the matching store automatically. You can also use either button.' : 'Auf iPhone und Android leiten wir dich automatisch zum passenden Store weiter. Du kannst auch einen der Buttons wählen.'}</p>
+      <div class="actions"><a class="button button-dark" href={business.ios}>App Store <ArrowUpRight size={17} aria-hidden="true"/></a><a class="button button-light-outline" href={business.android}>Google Play <ArrowUpRight size={17} aria-hidden="true"/></a></div>
+    </div>
+  </section>
+</Base>
+<script>
+  const page = document.querySelector<HTMLElement>('[data-app-landing]');
+  const device = navigator.userAgent;
+  const isApple = /iPhone|iPad|iPod/.test(device) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const target = isApple ? page?.dataset.ios : /Android/.test(device) ? page?.dataset.android : undefined;
+  if (target) window.location.replace(target);
+</script>

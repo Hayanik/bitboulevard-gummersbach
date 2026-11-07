@@ -1,0 +1,82 @@
+---
+import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
+import Photo from './Photo.astro';
+import { routes, type Language } from '../config/locale';
+import { photos } from '../data/photos';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+const scenes = [
+  { title: 'Gyros', photo: photos.gyros, alt: en ? 'Gyros on a ceramic plate with lemon and onions' : 'Gyros auf Keramik mit Zitrone und Zwiebeln' },
+  { title: 'Souvlaki', photo: photos.souvlaki, alt: en ? 'Grilled souvlaki skewers with lemon' : 'Gegrillte Souvlaki-Spieße mit Zitrone' },
+  { title: 'Bifteki', photo: photos.bifteki, alt: en ? 'Grilled bifteki with herbs on a ceramic plate' : 'Gegrillte Bifteki mit Kräutern auf Keramik' },
+];
+---
+<section class="appetite-hero" data-hero aria-labelledby="appetite-title">
+  <div class="appetite-frame">
+    <div class="appetite-image" data-hero-photo>
+      <Photo photo={{src: scenes[0].photo.src, alt: scenes[0].alt}} sizes="100vw" hero/>
+    </div>
+    <div class="appetite-shade" aria-hidden="true"></div>
+    <div class="appetite-grid" aria-hidden="true"></div>
+    <div class="appetite-top">
+      <p><span class="appetite-spark" aria-hidden="true">✳</span> BIT BOULEVARD <span>/ GUMMERSBACH</span></p>
+      <a href={routes.directions[lang]}><MapPin size={15} aria-hidden="true"/> Brückenstraße 8 <ArrowUpRight size={15} aria-hidden="true"/></a>
+    </div>
+    <div class="appetite-content">
+      <div class="appetite-copy">
+        <p class="appetite-eyebrow">{en ? 'Greek kitchen. Local nights.' : 'Griechische Küche. Gummersbacher Abende.'}</p>
+        <h1 id="appetite-title"><span>{en ? 'GREEK' : 'HUNGER'}</span><span class="appetite-outline">{en ? 'FOOD.' : 'AUF'}</span><span class="appetite-finish">{en ? 'GOOD NIGHTS.' : 'GRIECHISCH.'}</span></h1>
+        <p class="appetite-description">{en ? 'Gyros, souvlaki and a table for your people. Come over or bring Bit Boulevard home.' : 'Gyros, Souvlaki und ein Tisch für deine Runde. Komm vorbei oder hol dir das Bit nach Hause.'}</p>
+        <div class="actions">
+          <a class="button" href={routes.menu[lang]}><span class="appetite-wide-label">{en ? 'Explore the menu' : 'Speisekarte entdecken'}</span><span class="appetite-compact-label">{en ? 'View menu' : 'Speisekarte'}</span> <ArrowUpRight size={18} aria-hidden="true"/></a>
+          <a class="button button-outline" href={routes.order[lang]}>{en ? 'Order online' : 'Online bestellen'} <ArrowUpRight size={18} aria-hidden="true"/></a>
+        </div>
+      </div>
+      <div class="appetite-selector" role="group" aria-label={en ? 'Select a dish image' : 'Gerichtebild auswählen'} data-scenes hidden>
+        <span class="appetite-selector-label">{en ? 'On the menu' : 'Auf der Karte'}</span>
+        {scenes.map((scene,i) => <button type="button" data-scene={i} aria-pressed={i === 0}><small>0{i+1}</small><span>{scene.title}</span><ArrowUpRight size={17} aria-hidden="true"/></button>)}
+      </div>
+    </div>
+    {scenes.map((scene,i) => i > 0 && <template data-scene-image={i}><Photo photo={{src: scene.photo.src, alt: scene.alt}} sizes="100vw"/></template>)}
+    <div class="appetite-bottom">
+      <a href="#grill"><ArrowDown size={16} aria-hidden="true"/>{en ? 'Take a look around' : 'Weiter entdecken'}</a>
+      <a href={routes.contact[lang]+'#tisch'}>{en ? 'Your table is this way' : 'Hier geht’s zu deinem Tisch'} <ArrowUpRight size={17} aria-hidden="true"/></a>
+    </div>
+  </div>
+  <div class="appetite-shortcuts">
+    <a href={routes.kitchen[lang]}><small>01 / {en ? 'The kitchen' : 'Die Küche'}</small><span>{en ? 'From the grill.' : 'Direkt vom Grill.'}</span><ArrowUpRight size={19} aria-hidden="true"/></a>
+    <a href={routes.about[lang]}><small>02 / {en ? 'The restaurant' : 'Das Lokal'}</small><span>{en ? 'Stay a little longer.' : 'Bleib noch ein bisschen.'}</span><ArrowUpRight size={19} aria-hidden="true"/></a>
+    <a href={routes.order[lang]}><small>03 / {en ? 'Take it home' : 'Für zu Hause'}</small><span>{en ? 'Your place. Our food.' : 'Dein Sofa. Unser Essen.'}</span><ArrowUpRight size={19} aria-hidden="true"/></a>
+  </div>
+</section>
+<script>
+  const hero = document.querySelector('[data-hero]');
+  const photo = hero?.querySelector<HTMLElement>('[data-hero-photo]');
+  const controls = hero?.querySelector<HTMLElement>('[data-scenes]');
+  if (hero && photo && controls) {
+    const images = new Map<string, HTMLImageElement>();
+    const initial = photo.querySelector('img');
+    if (initial) images.set('0', initial);
+    const buttons = [...controls.querySelectorAll<HTMLButtonElement>('[data-scene]')];
+    let current = '0';
+    controls.hidden = false;
+    for (const button of buttons) button.addEventListener('click', () => {
+      const key = button.dataset.scene ?? '0';
+      if (key === current) return;
+      let image = images.get(key);
+      if (!image) {
+        const template = hero.querySelector<HTMLTemplateElement>(`[data-scene-image="${key}"]`);
+        image = template?.content.querySelector('img')?.cloneNode(true) as HTMLImageElement | undefined;
+        if (!image) return;
+        image.loading = 'eager';
+        images.set(key, image);
+      }
+      current = key;
+      photo.replaceChildren(image);
+      for (const option of buttons) option.setAttribute('aria-pressed', String(option === button));
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        image.animate([{ opacity: .4, transform: 'scale(1.035)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 450, easing: 'ease-out' });
+      }
+    });
+  }
+</script>

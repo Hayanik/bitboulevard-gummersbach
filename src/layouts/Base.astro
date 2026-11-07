@@ -1,0 +1,74 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+import '../styles/boulevard.css';
+import '../styles/preferences.css';
+import '../styles/legal.css';
+import '../styles/signature.css';
+import '../styles/hero.css';
+import '../styles/app-download.css';
+import PrivacyDialog from '../components/PrivacyDialog.astro';
+import { getImage } from 'astro:assets';
+import { photos } from '../data/photos';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { business, maps } from '../config/business';
+import { alternate, language, routes } from '../config/locale';
+interface Props { title: string; description: string; draft?: boolean }
+const { title, description, draft } = Astro.props;
+const path = Astro.url.pathname;
+const lang = language(path);
+const en = lang === 'en';
+const home = path === routes.home[lang];
+const canonical = new URL(path, Astro.site);
+const other = new URL(alternate(path), Astro.site);
+const deUrl = en ? other : canonical;
+const enUrl = en ? canonical : other;
+const preview = await getImage({ src: photos.gyros.src, width: 1200, format: 'jpg' });
+const structured = {
+  '@context': 'https://schema.org', '@type': 'Restaurant', '@id': new URL('/#restaurant', Astro.site),
+  name: business.name, url: Astro.site, telephone: '+49 2261 61083', email: business.email,
+  servesCuisine: en ? 'Greek' : 'Griechisch', menu: new URL(routes.menu[lang], Astro.site),
+  hasMap: maps, sameAs: [business.deliverySite, business.lieferando],
+  address: { '@type': 'PostalAddress', streetAddress: business.street, postalCode: business.postalCode, addressLocality: business.city, addressCountry: 'DE' },
+};
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8"/>
+  <script is:inline>
+    let theme;
+    try { theme = localStorage.getItem('bb-theme'); } catch {}
+    document.documentElement.dataset.theme = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#f4f0e6"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <title>{title}</title>
+  <meta name="description" content={description}/>
+  {draft && <meta name="robots" content="noindex"/>}
+  <link rel="canonical" href={canonical}/>
+  <link rel="alternate" hreflang="de" href={deUrl}/>
+  <link rel="alternate" hreflang="en" href={enUrl}/>
+  <link rel="alternate" hreflang="x-default" href={deUrl}/>
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:url" content={canonical}/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content={en ? 'en_GB' : 'de_DE'}/>
+  <meta property="og:locale:alternate" content={en ? 'de_DE' : 'en_GB'}/>
+  <meta property="og:site_name" content={business.name}/>
+  <meta property="og:image" content={new URL(preview.src, Astro.site)}/>
+  <meta property="og:image:alt" content={en ? 'Illustrative image of gyros in warm light' : 'KI-Bildmotiv mit Gyros im warmen Licht'}/>
+  {home && <script type="application/ld+json" set:html={JSON.stringify(structured)}/>}
+</head>
+<body class:list={['boulevard', home ? 'home' : 'inner']}>
+  <a class="skip-link" href="#inhalt">{en ? 'Skip to content' : 'Zum Inhalt'}</a>
+  <div id="seitenanfang" aria-hidden="true"></div>
+  <Header/>
+  <main id="inhalt"><slot/></main>
+  <Footer/>
+  <PrivacyDialog lang={lang}/>
+</body>
+</html>

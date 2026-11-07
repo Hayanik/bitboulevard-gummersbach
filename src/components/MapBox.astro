@@ -1,0 +1,30 @@
+---
+import { ArrowUpRight, MapPin } from 'lucide-react';
+import { business, maps, mapEmbed, directions } from '../config/business';
+import type { Language } from '../config/locale';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+---
+<section class="map-module" aria-label={en ? 'Location' : 'Standort'} data-map data-src={mapEmbed}
+  data-title={en ? 'Google Maps: Bit Boulevard, Gummersbach' : 'Google Maps: Bit Boulevard in Gummersbach'}>
+  <div class="map-stage" data-map-stage>
+    <div class="map-placeholder" data-map-placeholder>
+      <svg class="map-grid" viewBox="0 0 680 350" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+        <defs><pattern id="map-grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0v36" stroke="currentColor" stroke-opacity=".33"/></pattern></defs>
+        <path d="M0 0h680v350H0z" fill="url(#map-grid)"/>
+        <path d="M-40 265 204 133 348 193 501 104 735 173M-30 70l234 63 95-162M348 193l-21 193M501 104l30-142m-30 142 52 268M-20 316l213-36 141 40 207-52 157 26" stroke="currentColor" stroke-width="3"/>
+        <circle cx="348" cy="193" r="69" stroke="currentColor" stroke-dasharray="3 7"/>
+      </svg>
+      <div class="map-prompt">
+        <MapPin size={34} aria-hidden="true"/><strong>{business.street}</strong>
+        <span>{en ? 'The map connects to Google.' : 'Die Karte stellt eine Verbindung zu Google her.'}</span>
+        <button type="button" class="button" data-map-request hidden>{en ? 'Load Google Maps' : 'Google Maps laden'}</button>
+      </div>
+    </div>
+  </div>
+  <div class="map-links">
+    <button type="button" class="map-hide" data-map-hide hidden>{en ? 'Hide map' : 'Karte ausblenden'}</button>
+    <a href={maps}>{en ? 'Open in Google Maps' : 'In Google Maps öffnen'} <ArrowUpRight size={16} aria-hidden="true"/></a>
+    <a href={directions}>{en ? 'Get directions' : 'Route planen'} <ArrowUpRight size={16} aria-hidden="true"/></a>
+  </div>
+</section>

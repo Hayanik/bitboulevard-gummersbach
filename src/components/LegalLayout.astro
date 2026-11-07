@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { language } from '../config/locale';
+interface Props { title: string; description: string; heading: string; sections: { id: string; label: string }[]; draft?: boolean }
+const { title, description, heading, sections, draft } = Astro.props;
+const en = language(Astro.url.pathname) === 'en';
+---
+<Base {title} {description} {draft}>
+  <div class="legal-page light">
+    <header class="shell legal-title"><p class="eyebrow">Bit Boulevard / {en ? 'Website information' : 'Website-Informationen'}</p><h1>{heading}</h1><p>{description}</p></header>
+    <slot name="feature"/>
+    <div class="shell legal-grid">
+      <nav class="legal-index" aria-label={en ? 'Contents' : 'Inhaltsverzeichnis'}>
+        <p class="eyebrow">{en ? 'Contents' : 'Übersicht'}</p>
+        <ol>{sections.map(({id,label}) => <li><a href={'#'+id}>{label}</a></li>)}</ol>
+      </nav>
+      <div class="legal-copy"><slot/></div>
+    </div>
+  </div>
+</Base>

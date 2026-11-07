@@ -1,0 +1,15 @@
+.wabiy-mascot { display: grid; justify-items: center; align-content: center; gap: .2rem; min-width: 0; }
+.wabiy-mascot-stage { width: min(100%,240px); padding-top: 20px; }
+.wabiy-bird-art { display: block; position: relative; width: 200px; height: 200px; max-width: 100%; margin: 0 auto; padding: 0; background: transparent; border: 0; cursor: pointer; touch-action: manipulation; border-radius: 50%; }
+.wabiy-bird-art:focus-visible { outline: 2px solid var(--surface-accent); outline-offset: 5px; box-shadow: none; }
+.legal-feature .wabiy-bird-art > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.legal-feature .wabiy-bird-art > img { width: 100%; height: 100%; }
+.wabiy-instruction { font-size: .78rem; text-align: center; }
+.wabiy-pause { display: flex; gap: .5rem; align-items: center; cursor: pointer; min-height: 44px; font-size: .78rem; }
+.wabiy-pause input { width: 18px; height: 18px; accent-color: var(--surface-accent); }
+.wabiy-still-heart { position: absolute; top: 0; right: 15%; font-size: 1.7rem; color: #e11d48; line-height: 1; }
+@media (max-width: 480px) {
+  .wabiy-mascot { justify-items: start; }
+  .wabiy-mascot-stage { width: 180px; }
+  .wabiy-bird-art { width: 160px; height: 160px; }
+}

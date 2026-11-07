@@ -1,0 +1,88 @@
+---
+import { X } from 'lucide-react';
+import { routes, type Language } from '../config/locale';
+const { lang } = Astro.props as { lang: Language };
+const en = lang === 'en';
+---
+<dialog class="privacy-dialog" id="privacy-settings" aria-labelledby="privacy-settings-title" aria-describedby="privacy-settings-note">
+  <header><p class="eyebrow">{en ? 'Bit Boulevard / Privacy' : 'Bit Boulevard / Datenschutz'}</p>
+    <button class="icon-button" type="button" data-privacy-close aria-label={en ? 'Close' : 'Schließen'} autofocus><X aria-hidden="true"/></button>
+  </header>
+  <h2 id="privacy-settings-title">{en ? 'Privacy settings' : 'Datenschutzeinstellungen'}</h2>
+  <p id="privacy-settings-note">{en ? 'Google Maps is optional. If you allow it, Google receives your IP address and may use cookies or similar storage. Your choice applies to this browser tab. The address and route link work either way.' : 'Google Maps ist optional. Wenn du zustimmst, erhält Google deine IP-Adresse und kann Cookies oder ähnliche Speichertechniken einsetzen. Deine Auswahl gilt für diesen Browser-Tab. Adresse und Routenlink funktionieren in beiden Fällen.'}</p>
+  <p class="privacy-status" data-privacy-status aria-live="polite" data-allowed={en ? 'Current choice: Google Maps allowed.' : 'Aktuelle Auswahl: Google Maps erlaubt.'} data-blocked={en ? 'Current choice: Google Maps blocked.' : 'Aktuelle Auswahl: Google Maps blockiert.'}></p>
+  <div class="actions"><button type="button" class="button button-outline" data-privacy-choice="no">{en ? 'Keep blocked' : 'Blockiert lassen'}</button><button type="button" class="button button-outline" data-privacy-choice="yes">{en ? 'Allow Google Maps' : 'Google Maps erlauben'}</button></div>
+  <a class="text-link" data-privacy-info href={routes.privacy[lang]+'#karten'}>{en ? 'How we use Google Maps' : 'Datenschutzhinweise zu Google Maps'}</a>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#privacy-settings');
+  if (dialog) {
+    const key = 'bb-maps-consent-v1';
+    const status = dialog.querySelector<HTMLElement>('[data-privacy-status]');
+    let allowed = false;
+    try { allowed = sessionStorage.getItem(key) === 'yes'; } catch { /* Storage is optional. */ }
+    let opener: HTMLButtonElement | undefined;
+    let requestedMap: HTMLElement | undefined;
+
+    function setMap(map: HTMLElement, show: boolean) {
+      const stage = map.querySelector<HTMLElement>('[data-map-stage]');
+      const prompt = stage?.querySelector<HTMLElement>('[data-map-placeholder]');
+      const hide = map.querySelector<HTMLButtonElement>('[data-map-hide]');
+      if (!stage || !prompt || !hide) return;
+      if (show && !stage.querySelector('iframe')) {
+        const frame = document.createElement('iframe');
+        frame.title = map.dataset.title ?? 'Google Maps';
+        frame.referrerPolicy = 'no-referrer';
+        frame.src = map.dataset.src ?? '';
+        prompt.hidden = true;
+        stage.append(frame);
+      } else if (!show) {
+        stage.querySelector('iframe')?.remove();
+        prompt.hidden = false;
+      }
+      hide.hidden = !show;
+    }
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-privacy-open], [data-map-request]')) {
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        requestedMap = button.closest<HTMLElement>('[data-map]') ?? undefined;
+        if (allowed && requestedMap) {
+          setMap(requestedMap, true);
+          requestedMap.querySelector<HTMLButtonElement>('[data-map-hide]')?.focus();
+          return;
+        }
+        opener = button;
+        if (status) status.textContent = (allowed ? status.dataset.allowed : status.dataset.blocked) ?? '';
+        dialog.showModal();
+      });
+    }
+    for (const hide of document.querySelectorAll<HTMLButtonElement>('[data-map-hide]')) {
+      hide.addEventListener('click', () => {
+        const map = hide.closest<HTMLElement>('[data-map]');
+        if (!map) return;
+        setMap(map, false);
+        map.querySelector<HTMLButtonElement>('[data-map-request]')?.focus();
+      });
+    }
+    dialog.querySelector('[data-privacy-close]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-privacy-info]')?.addEventListener('click', () => {
+      opener = undefined;
+      dialog.close();
+    });
+    dialog.addEventListener('close', () => opener?.focus());
+    for (const button of dialog.querySelectorAll<HTMLButtonElement>('[data-privacy-choice]')) {
+      button.addEventListener('click', () => {
+        allowed = button.dataset.privacyChoice === 'yes';
+        try { sessionStorage.setItem(key, allowed ? 'yes' : 'no'); } catch { /* Storage is optional. */ }
+        if (!allowed) {
+          for (const map of document.querySelectorAll<HTMLElement>('[data-map]')) setMap(map, false);
+        } else if (requestedMap) {
+          setMap(requestedMap, true);
+          opener = requestedMap.querySelector<HTMLButtonElement>('[data-map-hide]') ?? opener;
+        }
+        dialog.close();
+      });
+    }
+  }
+</script>

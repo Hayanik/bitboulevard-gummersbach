@@ -1,0 +1,7 @@
+---
+import { Image } from 'astro:assets';
+interface Props { photo: { src: ImageMetadata; alt: string }; class?: string; sizes?: string; hero?: boolean }
+const { photo, class: className, sizes = '(max-width: 700px) 100vw, 50vw', hero = false } = Astro.props;
+const widths = [...new Set([360, 640, 960, 1280].filter(width => width < photo.src.width).concat(photo.src.width))];
+---
+<Image src={photo.src} alt={photo.alt} class={className} widths={widths} sizes={sizes} format="webp" quality={82} priority={hero}/>
