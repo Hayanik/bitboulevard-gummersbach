@@ -1,88 +1,37 @@
 ---
-import { X } from 'lucide-react';
+import { X, ShieldCheck, MapPin } from 'lucide-react';
 import { routes, type Language } from '../config/locale';
 const { lang } = Astro.props as { lang: Language };
 const en = lang === 'en';
+const legalPage = [routes.privacy[lang], routes.legal[lang]].some(path => path === Astro.url.pathname);
 ---
+<section class="cookie-banner" data-consent-banner data-auto-prompt={String(!legalPage)} aria-labelledby="cookie-title" hidden>
+  <div class="cookie-banner-copy"><p class="eyebrow"><ShieldCheck size={16} aria-hidden="true"/> BIT BOULEVARD / {en ? 'YOUR PRIVACY' : 'DEINE PRIVATSPHÄRE'}</p>
+    <h2 id="cookie-title">{en ? 'Cookies. Your choice.' : 'Cookies. Deine Entscheidung.'}</h2>
+    <p>{en ? 'We use necessary browser storage for your settings. Optional Google Maps may use cookies and sends data to Google. It stays blocked until you agree. No analytics or advertising tracking.' : 'Für deine Einstellungen nutzen wir notwendigen Browserspeicher. Optionales Google Maps kann Cookies verwenden und übermittelt Daten an Google. Bis zu deiner Zustimmung bleibt es blockiert. Kein Analyse- oder Werbetracking.'}</p>
+    <p class="cookie-small">{en ? 'You can change or withdraw your choice at any time using Privacy settings in the footer.' : 'Du kannst deine Auswahl jederzeit über die Datenschutzeinstellungen im Footer ändern oder widerrufen.'}</p>
+  </div>
+  <div class="cookie-banner-options"><div class="cookie-choice-buttons">
+    <button type="button" class="cookie-choice" data-consent-all="no">{en ? 'Reject all' : 'Alle ablehnen'}</button>
+    <button type="button" class="cookie-choice" data-consent-all="yes">{en ? 'Accept all' : 'Alle akzeptieren'}</button>
+  </div><button type="button" class="text-link" data-privacy-open>{en ? 'Customise settings' : 'Einstellungen anpassen'}</button>
+    <div class="cookie-legal-links"><a href={routes.privacy[lang]}>{en ? 'Privacy' : 'Datenschutz'}</a><a href={routes.legal[lang]}>{en ? 'Legal notice' : 'Impressum'}</a></div>
+  </div>
+</section>
 <dialog class="privacy-dialog" id="privacy-settings" aria-labelledby="privacy-settings-title" aria-describedby="privacy-settings-note">
-  <header><p class="eyebrow">{en ? 'Bit Boulevard / Privacy' : 'Bit Boulevard / Datenschutz'}</p>
-    <button class="icon-button" type="button" data-privacy-close aria-label={en ? 'Close' : 'Schließen'} autofocus><X aria-hidden="true"/></button>
+  <header><p class="eyebrow"><ShieldCheck size={16} aria-hidden="true"/> {en ? 'Bit Boulevard / Privacy' : 'Bit Boulevard / Datenschutz'}</p>
+    <button class="icon-button" type="button" data-privacy-close aria-label={en ? 'Close without changing your choice' : 'Ohne Änderung schließen'} autofocus><X aria-hidden="true"/></button>
   </header>
-  <h2 id="privacy-settings-title">{en ? 'Privacy settings' : 'Datenschutzeinstellungen'}</h2>
-  <p id="privacy-settings-note">{en ? 'Google Maps is optional. If you allow it, Google receives your IP address and may use cookies or similar storage. Your choice applies to this browser tab. The address and route link work either way.' : 'Google Maps ist optional. Wenn du zustimmst, erhält Google deine IP-Adresse und kann Cookies oder ähnliche Speichertechniken einsetzen. Deine Auswahl gilt für diesen Browser-Tab. Adresse und Routenlink funktionieren in beiden Fällen.'}</p>
-  <p class="privacy-status" data-privacy-status aria-live="polite" data-allowed={en ? 'Current choice: Google Maps allowed.' : 'Aktuelle Auswahl: Google Maps erlaubt.'} data-blocked={en ? 'Current choice: Google Maps blocked.' : 'Aktuelle Auswahl: Google Maps blockiert.'}></p>
-  <div class="actions"><button type="button" class="button button-outline" data-privacy-choice="no">{en ? 'Keep blocked' : 'Blockiert lassen'}</button><button type="button" class="button button-outline" data-privacy-choice="yes">{en ? 'Allow Google Maps' : 'Google Maps erlauben'}</button></div>
-  <a class="text-link" data-privacy-info href={routes.privacy[lang]+'#karten'}>{en ? 'How we use Google Maps' : 'Datenschutzhinweise zu Google Maps'}</a>
+  <h2 id="privacy-settings-title" data-default-title={en ? 'Privacy settings' : 'Datenschutz­einstellungen'} data-map-title={en ? 'Allow Google Maps?' : 'Google Maps freigeben?'}>{en ? 'Privacy settings' : 'Datenschutz­einstellungen'}</h2>
+  <p id="privacy-settings-note">{en ? 'You decide which optional services may load. Google Maps connects to Google, sends your IP address and may use cookies or similar storage. Data may also be processed in the USA. Your choice is voluntary; you can withdraw it at any time in the footer.' : 'Du entscheidest, welche optionalen Dienste laden dürfen. Google Maps stellt eine Verbindung zu Google her, übermittelt deine IP-Adresse und kann Cookies oder ähnliche Speichertechniken einsetzen. Daten können auch in den USA verarbeitet werden. Deine Einwilligung ist freiwillig und jederzeit im Footer widerrufbar.'}</p>
+  <div class="privacy-service privacy-essential"><div><strong>{en ? 'Necessary settings' : 'Notwendige Einstellungen'}</strong><p>{en ? 'Remember your privacy choice and selected theme. Required to provide these settings.' : 'Merken deine Datenschutzentscheidung und dein gewähltes Farbschema. Für diese Einstellungen erforderlich.'}</p></div><span>{en ? 'Always active' : 'Immer aktiv'}</span></div>
+  <label class="privacy-service" for="consent-google-maps"><div><strong><MapPin size={17} aria-hidden="true"/> Google Maps</strong><p id="maps-service-description">{en ? 'Optional map showing the restaurant. Provider: Google Ireland Limited. Address and directions links also work without the embed.' : 'Optionale Standortkarte des Restaurants. Anbieter: Google Ireland Limited. Adresse und Routenlinks funktionieren auch ohne Einbettung.'}</p></div><input id="consent-google-maps" type="checkbox" aria-label="Google Maps" aria-describedby="maps-service-description" data-consent-maps/></label>
+  <p class="privacy-status" data-privacy-status aria-live="polite" data-allowed={en ? 'Saved choice: Google Maps allowed.' : 'Gespeicherte Auswahl: Google Maps erlaubt.'} data-blocked={en ? 'Saved choice: Google Maps blocked.' : 'Gespeicherte Auswahl: Google Maps blockiert.'} data-undecided={en ? 'No choice saved. Optional services stay blocked.' : 'Noch keine Auswahl gespeichert. Optionale Dienste bleiben blockiert.'}></p>
+  <p class="cookie-small">{en ? 'We remember acceptance and rejection equally for 180 days in this browser. You can change your choice sooner at any time.' : 'Wir merken Zustimmung und Ablehnung gleichermaßen für 180 Tage in diesem Browser. Du kannst deine Auswahl jederzeit vorher ändern.'}</p>
+  <div class="cookie-choice-buttons"><button type="button" class="cookie-choice" data-consent-all="no">{en ? 'Reject all' : 'Alle ablehnen'}</button><button type="button" class="cookie-choice" data-consent-all="yes">{en ? 'Accept all' : 'Alle akzeptieren'}</button></div>
+  <button type="button" class="privacy-save" data-consent-save>{en ? 'Save selection' : 'Auswahl speichern'}</button>
+  <a class="text-link" data-privacy-info href={routes.privacy[lang]+'#karten'}>{en ? 'Privacy details and Google Maps' : 'Datenschutzhinweise und Google Maps'}</a>
 </dialog>
 <script>
-  const dialog = document.querySelector<HTMLDialogElement>('#privacy-settings');
-  if (dialog) {
-    const key = 'bb-maps-consent-v1';
-    const status = dialog.querySelector<HTMLElement>('[data-privacy-status]');
-    let allowed = false;
-    try { allowed = sessionStorage.getItem(key) === 'yes'; } catch { /* Storage is optional. */ }
-    let opener: HTMLButtonElement | undefined;
-    let requestedMap: HTMLElement | undefined;
-
-    function setMap(map: HTMLElement, show: boolean) {
-      const stage = map.querySelector<HTMLElement>('[data-map-stage]');
-      const prompt = stage?.querySelector<HTMLElement>('[data-map-placeholder]');
-      const hide = map.querySelector<HTMLButtonElement>('[data-map-hide]');
-      if (!stage || !prompt || !hide) return;
-      if (show && !stage.querySelector('iframe')) {
-        const frame = document.createElement('iframe');
-        frame.title = map.dataset.title ?? 'Google Maps';
-        frame.referrerPolicy = 'no-referrer';
-        frame.src = map.dataset.src ?? '';
-        prompt.hidden = true;
-        stage.append(frame);
-      } else if (!show) {
-        stage.querySelector('iframe')?.remove();
-        prompt.hidden = false;
-      }
-      hide.hidden = !show;
-    }
-
-    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-privacy-open], [data-map-request]')) {
-      button.hidden = false;
-      button.addEventListener('click', () => {
-        requestedMap = button.closest<HTMLElement>('[data-map]') ?? undefined;
-        if (allowed && requestedMap) {
-          setMap(requestedMap, true);
-          requestedMap.querySelector<HTMLButtonElement>('[data-map-hide]')?.focus();
-          return;
-        }
-        opener = button;
-        if (status) status.textContent = (allowed ? status.dataset.allowed : status.dataset.blocked) ?? '';
-        dialog.showModal();
-      });
-    }
-    for (const hide of document.querySelectorAll<HTMLButtonElement>('[data-map-hide]')) {
-      hide.addEventListener('click', () => {
-        const map = hide.closest<HTMLElement>('[data-map]');
-        if (!map) return;
-        setMap(map, false);
-        map.querySelector<HTMLButtonElement>('[data-map-request]')?.focus();
-      });
-    }
-    dialog.querySelector('[data-privacy-close]')?.addEventListener('click', () => dialog.close());
-    dialog.querySelector('[data-privacy-info]')?.addEventListener('click', () => {
-      opener = undefined;
-      dialog.close();
-    });
-    dialog.addEventListener('close', () => opener?.focus());
-    for (const button of dialog.querySelectorAll<HTMLButtonElement>('[data-privacy-choice]')) {
-      button.addEventListener('click', () => {
-        allowed = button.dataset.privacyChoice === 'yes';
-        try { sessionStorage.setItem(key, allowed ? 'yes' : 'no'); } catch { /* Storage is optional. */ }
-        if (!allowed) {
-          for (const map of document.querySelectorAll<HTMLElement>('[data-map]')) setMap(map, false);
-        } else if (requestedMap) {
-          setMap(requestedMap, true);
-          opener = requestedMap.querySelector<HTMLButtonElement>('[data-map-hide]') ?? opener;
-        }
-        dialog.close();
-      });
-    }
-  }
+  import '../lib/privacy';
 </script>
