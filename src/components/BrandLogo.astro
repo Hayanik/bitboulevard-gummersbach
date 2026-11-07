@@ -1,0 +1,7 @@
+---
+import logo from '../assets/bit-boulevard-logo.png';
+interface Props { variant?: 'header' | 'footer' | 'social'; priority?: boolean }
+const { variant = 'header', priority = false } = Astro.props;
+---
+<img class:list={['brand-logo', 'brand-logo--' + variant]} src={logo.src} width={logo.width} height={logo.height}
+  alt="Bit-Boulevard · Restaurant · Bar" loading={priority ? 'eager' : 'lazy'} decoding="async" fetchpriority={priority ? 'high' : 'auto'}/>

@@ -7,9 +7,9 @@ import '../styles/legal.css';
 import '../styles/signature.css';
 import '../styles/hero.css';
 import '../styles/app-download.css';
+import '../styles/brand.css';
 import PrivacyDialog from '../components/PrivacyDialog.astro';
-import { getImage } from 'astro:assets';
-import { photos } from '../data/photos';
+import logo from '../assets/bit-boulevard-logo.png';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { business, maps } from '../config/business';
@@ -24,10 +24,10 @@ const canonical = new URL(path, Astro.site);
 const other = new URL(alternate(path), Astro.site);
 const deUrl = en ? other : canonical;
 const enUrl = en ? canonical : other;
-const preview = await getImage({ src: photos.gyros.src, width: 1200, format: 'jpg' });
 const structured = {
   '@context': 'https://schema.org', '@type': 'Restaurant', '@id': new URL('/#restaurant', Astro.site),
   name: business.name, url: Astro.site, telephone: '+49 2261 61083', email: business.email,
+  logo: new URL(logo.src, Astro.site),
   servesCuisine: en ? 'Greek' : 'Griechisch', menu: new URL(routes.menu[lang], Astro.site),
   hasMap: maps, sameAs: [business.deliverySite, business.lieferando, business.instagram],
   address: { '@type': 'PostalAddress', streetAddress: business.street, postalCode: business.postalCode, addressLocality: business.city, addressCountry: 'DE' },
@@ -37,14 +37,16 @@ const structured = {
 <html lang={lang}>
 <head>
   <meta charset="utf-8"/>
+  <slot name="head"/>
   <script is:inline>
     let theme;
     try { theme = localStorage.getItem('bb-theme'); } catch {}
     document.documentElement.dataset.theme = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#f4f0e6"/>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <meta name="theme-color" content="#0c2c1d"/>
+  <link rel="icon" href="/favicon.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="/favicon.png"/>
   <title>{title}</title>
   <meta name="description" content={description}/>
   {draft && <meta name="robots" content="noindex"/>}
@@ -59,8 +61,10 @@ const structured = {
   <meta property="og:locale" content={en ? 'en_GB' : 'de_DE'}/>
   <meta property="og:locale:alternate" content={en ? 'de_DE' : 'en_GB'}/>
   <meta property="og:site_name" content={business.name}/>
-  <meta property="og:image" content={new URL(preview.src, Astro.site)}/>
-  <meta property="og:image:alt" content={en ? 'Illustrative image of gyros in warm light' : 'KI-Bildmotiv mit Gyros im warmen Licht'}/>
+  <meta property="og:image" content={new URL(logo.src, Astro.site)}/>
+  <meta property="og:image:width" content={String(logo.width)}/>
+  <meta property="og:image:height" content={String(logo.height)}/>
+  <meta property="og:image:alt" content="Bit-Boulevard · Restaurant · Bar"/>
   {home && <script type="application/ld+json" set:html={JSON.stringify(structured)}/>}
 </head>
 <body class:list={['boulevard', home ? 'home' : 'inner']}>

@@ -1,5 +1,6 @@
 ---
 import { ArrowUpRight, ArrowUp } from 'lucide-react';
+import BrandLogo from './BrandLogo.astro';
 import { business, maps, googleReview } from '../config/business';
 import { language, navigation, routes } from '../config/locale';
 const lang = language(Astro.url.pathname);
@@ -7,6 +8,7 @@ const en = lang === 'en';
 ---
 <footer class="site-footer">
   <div class="shell">
+    <a class="footer-brand" href={routes.home[lang]} aria-label={en ? 'Bit Boulevard home' : 'Bit Boulevard Startseite'}><BrandLogo variant="footer"/></a>
     <div class="footer-kicker"><span><i></i> BRÜCKENSTRASSE 08 / 51643</span><a class="icon-button top-link" href="#seitenanfang" aria-label={en ? 'Back to top' : 'Zum Seitenanfang'}><ArrowUp aria-hidden="true"/></a></div>
     <div class="footer-display"><h2>{en ? 'SEE YOU' : 'BIS GLEICH'}<br/><em>{en ? 'AT BIT.' : 'IM BIT.'}</em></h2><a class="button" href={routes.contact[lang]+'#tisch'}>{en ? 'Book a table' : 'Tisch anfragen'} <ArrowUpRight size={18} aria-hidden="true"/></a></div>
     <div class="footer-grid">

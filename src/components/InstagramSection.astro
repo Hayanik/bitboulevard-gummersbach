@@ -1,6 +1,7 @@
 ---
 import { ArrowUpRight } from 'lucide-react';
 import Instagram from './InstagramMark.astro';
+import BrandLogo from './BrandLogo.astro';
 import { business } from '../config/business';
 import type { Language } from '../config/locale';
 const { lang } = Astro.props as {lang: Language};
@@ -11,7 +12,7 @@ const en = lang === 'en';
   <div class="social-copy"><p class="bb-label"><Instagram size={17} aria-hidden="true"/> BIT / INSTAGRAM</p><h2 id="social-title">{en ? 'STAY' : 'BLEIB'}<br/><em>{en ? 'IN THE LOOP.' : 'MIT DRIN.'}</em></h2><p>{en ? 'More Bit Boulevard, between visits. Find us on Instagram — and take a little Gummersbach with you.' : 'Mehr Bit Boulevard zwischen deinen Besuchen. Schau auf Instagram vorbei und nimm ein Stück Gummersbach mit.'}</p><a class="button" href={business.instagram}>{en ? 'Visit us on Instagram' : 'Auf Instagram vorbeischauen'}<ArrowUpRight size={18} aria-hidden="true"/></a><small>{en ? 'Opens Instagram. No embedded feed or tracking loads here.' : 'Führt zu Instagram. Hier lädt kein eingebetteter Feed oder Tracking.'}</small></div>
   <a class="social-profile" href={business.instagram} aria-label={en ? 'Bit Boulevard on Instagram: bit.boulevard' : 'Bit Boulevard auf Instagram: bit.boulevard'}>
    <div class="social-profile-top"><span>GUMMERSBACH / DE</span><Instagram size={26} aria-hidden="true"/></div>
-   <div class="social-monogram" aria-hidden="true">bit<span>✳</span></div>
+   <div class="social-brand"><BrandLogo variant="social"/></div>
    <div class="social-profile-bottom"><div><span>@bit.boulevard</span><p>{en ? 'Greek kitchen. Good company.' : 'Griechische Küche. Gute Gesellschaft.'}</p></div><span class="social-arrow"><ArrowUpRight aria-hidden="true"/></span></div>
   </a>
  </div>

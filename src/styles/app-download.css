@@ -8,7 +8,7 @@
 .app-store-link:hover { background: var(--surface); color: var(--surface-text); }
 .app-qr-link { display: grid; gap: .7rem; justify-items: center; flex: none; }
 .app-qr { width: clamp(152px,15vw,192px); aspect-ratio: 1; background: #fff; border: 1px solid #fff; }
-.app-qr svg { display: block; width: 100%; height: 100%; }
+.app-qr img { display: block; width: 100%; height: 100%; }
 .app-qr-link > span { display: flex; align-items: center; gap: .4rem; font: 750 .68rem/1.4 var(--mono); letter-spacing: .02em; }
 .app-landing { display: grid; justify-items: start; gap: 1rem; }
 .app-landing h2 { font-size: clamp(2.3rem,5vw,4rem); }

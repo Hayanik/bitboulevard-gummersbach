@@ -1,6 +1,7 @@
 ---
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import ThemeSwitch from './ThemeSwitch.astro';
+import BrandLogo from './BrandLogo.astro';
 import { alternate, language, navigation, routes } from '../config/locale';
 const current = Astro.url.pathname;
 const lang = language(current);
@@ -9,7 +10,7 @@ const nav = navigation(lang);
 ---
 <header class="site-header" data-header>
   <a class="brand" href={routes.home[lang]} aria-label={en ? 'Bit Boulevard home' : 'Bit Boulevard Startseite'}>
-    <span class="brand-sigil" aria-hidden="true">B<span>B</span></span><span>BIT<br/>BOULEVARD<span class="brand-dot">.</span></span>
+    <BrandLogo priority/>
   </a>
   <nav class="desktop-nav" aria-label={en ? 'Main navigation' : 'Hauptnavigation'}>
     {nav.map(({href,label}) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}

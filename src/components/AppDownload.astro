@@ -1,28 +1,22 @@
 ---
-import QRCode from 'qrcode';
 import { ArrowUpRight, Smartphone, ScanLine } from 'lucide-react';
 import { business } from '../config/business';
-import { routes, type Language } from '../config/locale';
+import type { Language } from '../config/locale';
 const { lang } = Astro.props as { lang: Language };
 const en = lang === 'en';
-const target = new URL(routes.app.de, Astro.site).href;
-const code = await QRCode.toString(target, {
-  type: 'svg', errorCorrectionLevel: 'M', margin: 4, width: 192,
-  color: { dark: '#171815', light: '#ffffff' },
-});
 ---
 <aside class="app-download" aria-labelledby={'app-download-'+lang}>
   <div class="app-download-copy">
     <p class="eyebrow"><Smartphone size={15} aria-hidden="true"/> {en ? 'Bit Boulevard on your phone' : 'Bit Boulevard auf deinem Handy'}</p>
     <h2 id={'app-download-'+lang}>{en ? 'Scan. Order.' : 'Scannen. Bestellen.'}</h2>
-    <p>{en ? 'Scan the code to open the app in the store for your phone. Already on mobile? Use the store buttons below.' : 'Scanne den Code und öffne die App im passenden Store für dein Handy. Schon mobil unterwegs? Nutze die Store-Buttons.'}</p>
+    <p>{en ? 'One QR code for iPhone and Android. Scan it and we’ll take you straight to the matching app store. Or open the download link on your phone.' : 'Ein QR-Code für iPhone und Android. Scanne ihn und du landest direkt im passenden App-Store. Oder öffne den Download-Link auf deinem Handy.'}</p>
     <div class="actions">
       <a class="app-store-link" href={business.ios}>App Store <ArrowUpRight size={16} aria-hidden="true"/></a>
       <a class="app-store-link" href={business.android}>Google Play <ArrowUpRight size={16} aria-hidden="true"/></a>
     </div>
   </div>
-  <a class="app-qr-link" href={routes.app[lang]} aria-label={en ? 'Open Bit Boulevard app download' : 'Bit-Boulevard-App herunterladen'}>
-    <div class="app-qr" set:html={code}/>
+  <a class="app-qr-link" href={business.appDownloadPath} aria-label={en ? 'Open Bit Boulevard app download' : 'Bit-Boulevard-App herunterladen'}>
+    <div class="app-qr"><img src="/app-qr.svg" width="192" height="192" alt={en ? 'QR code: Bit Boulevard app download for iPhone and Android' : 'QR-Code: Bit-Boulevard-App für iPhone und Android'} loading="lazy"/></div>
     <span><ScanLine size={15} aria-hidden="true"/>{en ? 'Scan to get the app' : 'Scannen & App laden'}</span>
   </a>
 </aside>

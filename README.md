@@ -21,13 +21,13 @@ Astro gibt 26 statische Seiten nach `dist/` aus. `SITE_URL` setzt die produktive
 - `src/config/business.ts` bündelt Adresse, Kontakt, Buchungslinks, Bestellportal, App-Stores, Kartenstandort und veröffentlichte Küchen- und Lieferzeiten.
 - `src/config/locale.ts` definiert die Sprachrouten. Die englischen Routen teilen sich die Seitenkomponenten mit den deutschen.
 - `src/data/menu.ts` enthält die zweisprachige, aus den vier Originalbildern übertragene Restaurantkarte mit Nummern, Preisen, Pizzagrößen und gedruckten Allergenkennzeichnungen. Astro rendert sie als HTML. React ergänzt Suche und Filter.
-- `src/data/photos.ts` bündelt die gekennzeichneten KI-Motive. Astro erzeugt responsive WebP-Varianten. Die Wortmarke ist ein Entwurf.
+- `src/data/photos.ts` bündelt die gekennzeichneten KI-Motive. Astro erzeugt responsive WebP-Varianten. Das vom Auftraggeber bereitgestellte Original-Logo liegt unverändert in src/assets/bit-boulevard-logo.png. Die Farbwelt verwendet dessen Hintergrundfarbe #0c2c1d mit Weiß und gedecktem Salbeigrün.
 - `src/styles/boulevard.css` enthält die visuelle Überarbeitung. Die Bewegungen der Startseite sitzen in `src/lib/motion.ts` und im Bildwechsel der Gerichte. Browser-Animationen und IntersectionObserver ersetzen die frühere GSAP-Abhängigkeit. Drei lateinische WOFF2-Dateien decken die beiden Sprachfassungen ab. Es gibt kein Autoplay-Video.
 - Heller und dunkler Modus folgen zunächst der Systemeinstellung. Eine manuelle Auswahl wird unter `bb-theme` lokal gespeichert.
 - Google Maps lädt erst nach Freigabe. `bb-maps-consent-v1` merkt die Entscheidung für den aktuellen Browser-Tab. Über die Datenschutzeinstellungen im Footer ist sie widerrufbar. Standort und Route bleiben ohne Skript als Links verfügbar.
 - Barrierefreiheit, Impressum und Datenschutz teilen eine Vorlage mit Inhaltsverzeichnis. Die Barrierefreiheitsseite nutzt den interaktiven Standardvogel aus `Wabiy/Frontend/src/components/Home/AnimatedBird.tsx`. Er reagiert auf Klick, Enter und Leertaste, bietet eine Pausensteuerung und berücksichtigt Reduced Motion. Rückmeldungen zu Barrieren gehen per E-Mail an das Restaurant. Die Erklärung beschreibt Barrierefreiheit als Ziel und weist auf die noch ausstehende vollständige Prüfung hin. Die Animationsbibliothek wird nur auf den beiden Barrierefreiheitsseiten geladen.
 - `src/data/reviews.ts` enthält vier kurze, direkt in Google Maps geprüfte Rezensionsauszüge und den Bewertungsstand vom 07.11.2026. Die Startseite kennzeichnet die positiven Auszüge als Auswahl, zeigt den Gesamtstand separat und verlinkt zu Google. Zahlen und Altersangaben sind eine Momentaufnahme und sollten bei Inhaltsaktualisierungen abgeglichen werden.
-- Der QR-Code wird beim Build lokal erzeugt und führt zur mit `SITE_URL` konfigurierten Domain unter `/app/`. Diese Route öffnet auf iPhone/iPad den App Store und auf Android Google Play. Vor dem öffentlichen Einsatz des Codes muss diese Route auf der gewählten Domain erreichbar sein.
+- Ein gemeinsamer QR-Code wird beim Build als /app-qr.svg lokal erzeugt und führt zur mit `SITE_URL` konfigurierten Domain unter `/app/`. Die Geräteerkennung läuft als Inline-Skript unmittelbar im HTML-Kopf: iPhone/iPad öffnen den App Store, Android öffnet Google Play. Am Desktop oder ohne JavaScript bleiben beide Store-Links verfügbar. Vor dem öffentlichen Einsatz des Codes muss diese Route auf der gewählten Domain erreichbar sein.
 - Anfahrt, Bestellen, FAQ und Aus der Küche haben eigene Routen. Der Hero bietet drei manuell wählbare Food-Motive. Weitere Szenen werden erst beim Wechsel geladen.
 - Die Startseiten enthalten Restaurant-JSON-LD. `llms.txt` ist ein kompakter Wegweiser zu offiziellen Inhalten. Für Googles KI-Suche setzt die Website auf indexierbares HTML und die üblichen Suchsignale.
 
@@ -41,7 +41,7 @@ Astro gibt 26 statische Seiten nach `dist/` aus. `SITE_URL` setzt die produktive
 
 ## Vor Veröffentlichung klären
 
-- Offizielles Logo und freigegebene Originalaufnahmen von Gaststube und Gerichten. Derzeit sind die Motive als KI-Bilder gekennzeichnet.
+- Freigegebene Originalaufnahmen von Gaststube und Gerichten. Derzeit sind die Motive als KI-Bilder gekennzeichnet.
 - Restaurantöffnungszeiten und Aktualität der getrennten Küchen- und Lieferzeiten bestätigen. Preise vor Ort, Zutaten, Allergene und Zusatzstoffe abgleichen.
 - Impressum um etwaige bestätigte Pflichtangaben ergänzen, etwa vorhandene USt-IdNr., Register- oder Aufsichtsangaben. Anwendbarkeit und Betreiberposition zur Verbraucherstreitbeilegung klären.
 - Datenschutzhinweise anhand des gewählten Hostings und der tatsächlichen Datenverarbeitung fertigstellen. Beide Datenschutzseiten sind bis dahin als Entwurf gekennzeichnet und mit `noindex` versehen.

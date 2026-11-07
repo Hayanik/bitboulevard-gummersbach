@@ -6,7 +6,7 @@
 .original-image { position:relative; overflow:hidden; background:#282e24; border:1px solid var(--rule); box-shadow:0 12px 22px #00000015; }
 .original-image img { width:100%; height:auto; transition:transform .4s; }
 .original-card:hover img { transform:scale(1.025); }
-.original-expand { position:absolute; bottom:12px; right:12px; display:grid; place-items:center; width:40px; height:40px; background:#dcf566; color:#171b13; border-radius:50%; }
+.original-expand { position:absolute; bottom:12px; right:12px; display:grid; place-items:center; width:40px; height:40px; background:#d4e3d6; color:#0c2c1d; border-radius:50%; }
 .original-caption { display:flex; align-items:baseline; gap:.5rem; padding-top:.8rem; }
 .original-caption > span { font-size:.65rem; opacity:.7; }
 .original-caption h3 { flex:1; font:750 clamp(.85rem,1.2vw,1.05rem)/1.3 var(--body); letter-spacing:-.03em; }

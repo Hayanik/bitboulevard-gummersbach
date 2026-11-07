@@ -18,7 +18,7 @@ const en = Astro.props.lang === 'en';
   function update() {
     const dark = preference === 'dark' || (preference !== 'light' && system.matches);
     root.dataset.theme = dark ? 'dark' : 'light';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#171815' : '#f4f0e6');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0c2c1d');
     button?.setAttribute('aria-pressed', String(dark));
   }
   update();
