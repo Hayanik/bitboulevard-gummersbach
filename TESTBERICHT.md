@@ -49,4 +49,4 @@ Lighthouse, reale Core Web Vitals und eine vollständige WCAG-Konformitätsprüf
 
 - Standarddarstellung und Verhalten aus der vom Nutzer bereitgestellten Originaldatei AnimatedBird.tsx übernommen. Nicht verwendete Varianten wurden entfernt. Die Animation wird nur auf den beiden Barrierefreiheitsseiten eingebunden.
 - Klick, Enter und Leertaste getestet. Der Vogel reagiert mit Hüpfen, Flügelschlagen und Herzen. Pause, statische Rückmeldung und Fortsetzen geprüft. Reduced Motion nutzt die statische Darstellung mit weiterhin bedienbarer Rückmeldung.
-- Die beiden E-Mail-Vorlagen adressieren bit-boulevard@web.de beziehungsweise barrierefrei@wabiy.com. In beiden Sprachen enthalten sie Betreff und Felder für eine Barriere-Meldung.
+- Die E-Mail-Vorlage adressiert bit-boulevard@web.de. In beiden Sprachen enthält sie Betreff und Felder für eine Barriere-Meldung. Die Erklärung beschreibt das Ziel einer möglichst barrierefreien Website und lädt zu Rückmeldungen ein.

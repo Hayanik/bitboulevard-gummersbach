@@ -17,25 +17,23 @@ const sections = [
 const subject = en ? 'Accessibility feedback – Bit Boulevard' : 'Barriere melden – Bit Boulevard';
 const body = en ? 'Hello Bit Boulevard,\n\nI found an accessibility barrier.\n\nPage or link:\nWhat was difficult?\nDevice, browser or assistive technology (optional):\n\nThank you'
   : 'Hallo Bit Boulevard,\n\nich möchte eine Barriere auf eurer Website melden.\n\nSeite oder Link:\nWas hat nicht funktioniert?\nGerät, Browser oder Hilfsmittel (optional):\n\nViele Grüße';
-const technicalBody = body.replace(en ? 'Hello Bit Boulevard,' : 'Hallo Bit Boulevard,', en ? 'Hello Wabiy,' : 'Hallo Wabiy,');
-const technicalFeedback = `mailto:barrierefrei@wabiy.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(technicalBody)}`;
 const feedback = `mailto:${business.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 ---
 <LegalLayout title={en ? 'Accessibility | Bit Boulevard' : 'Barrierefreiheit | Bit Boulevard'}
   heading={en ? 'Accessibility.' : 'Barrierefreiheit.'} {sections}
-  description={en ? 'Find out how to use the website and how to report an accessibility barrier.' : 'So kannst du unsere Website bedienen und eine Barriere melden.'}>
+  description={en ? 'Our commitment to making this website accessible and how to share feedback.' : 'Unser Anspruch an eine möglichst barrierefreie Website und dein Weg für Rückmeldungen.'}>
   <div slot="feature" class="shell">
     <div class="legal-feature">
       <WabiyBird client:visible lang={lang}/>
       <div><p class="eyebrow">{en ? 'Digital accessibility' : 'Digitale Barrierefreiheit'}</p>
-        <h2>{en ? 'Everyone should be able to find their way.' : 'Hier sollen sich alle zurechtfinden.'}</h2>
-        <p>{en ? 'Tell us if something gets in your way when viewing the menu, finding directions or contacting us.' : 'Sag uns Bescheid, wenn dir beim Lesen der Speisekarte, bei der Anfahrt oder beim Kontakt etwas im Weg steht.'}</p>
+        <h2>{en ? 'Working towards an accessible website.' : 'Für eine möglichst barrierefreie Website.'}</h2>
+        <p>{en ? 'We aim to make our website accessible to as many people as possible. If you encounter a barrier, please let us know. Your feedback helps us improve the experience.' : 'Wir möchten unsere Website für möglichst viele Menschen zugänglich und gut bedienbar gestalten. Solltest du auf eine Barriere stoßen, freuen wir uns über deine Rückmeldung. Deine Hinweise helfen uns, das Angebot weiter zu verbessern.'}</p>
         <a class="text-link" href="#feedback">{sections[3].label} ↓</a>
       </div>
     </div>
   </div>
   <LegalSection id={sections[0].id} title={sections[0].label} number="01">
-    <p>{en ? 'We use WCAG 2.2 at level AA as a design and development target. We build accessibility into the page structure and controls.' : 'Für Gestaltung und Entwicklung orientieren wir uns an den WCAG 2.2 auf Stufe AA. Zugänglichkeit setzen wir direkt in der Seitenstruktur und in den Bedienelementen um.'} <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 ↗</a></p>
+    <p>{en ? 'We are working towards improving the accessibility of this website. WCAG 2.2 at level AA provides guidance for our design and development work.' : 'Wir streben an, die Zugänglichkeit unserer Website schrittweise zu verbessern. Bei Gestaltung und Entwicklung orientieren wir uns an den WCAG 2.2 auf Stufe AA.'} <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 ↗</a></p>
   </LegalSection>
   <LegalSection id={sections[1].id} title={sections[1].label} number="02">
     <ul>
@@ -46,14 +44,12 @@ const feedback = `mailto:${business.email}?subject=${encodeURIComponent(subject)
     </ul>
   </LegalSection>
   <LegalSection id={sections[2].id} title={sections[2].label} number="03">
-    <p>{en ? 'We have tested selected functions and screen sizes. A full WCAG conformance audit is pending. External ordering services and Google Maps have their own interfaces.' : 'Wir haben ausgewählte Funktionen und Bildschirmgrößen geprüft. Eine vollständige WCAG-Konformitätsprüfung steht aus. Externe Bestelldienste und Google Maps haben eigene Oberflächen.'}</p>
+    <p>{en ? 'Selected features and screen sizes have been tested. A full accessibility assessment is still pending, so barriers may remain. External ordering services and Google Maps have their own interfaces.' : 'Ausgewählte Funktionen und Bildschirmgrößen wurden geprüft. Eine vollständige Prüfung der Barrierefreiheit steht noch aus. Es kann daher weiterhin Einschränkungen geben. Externe Bestelldienste und Google Maps haben eigene Oberflächen.'}</p>
     <p>{en ? 'If you have questions about access to the restaurant, please contact us before your visit.' : 'Wenn du Fragen zum Zugang vor Ort hast, melde dich bitte vor deinem Besuch bei uns.'} <a href={routes.contact[lang]}>{en ? 'Contact' : 'Kontakt'}</a></p>
   </LegalSection>
   <LegalSection id={sections[3].id} title={sections[3].label} number="04">
-    <p>{en ? 'Please tell us which page you were on and what you were trying to do. The email template helps you include the details we need.' : 'Nenne uns bitte die betroffene Seite und beschreibe, was du dort machen wolltest. Die E-Mail-Vorlage hilft dir, die wichtigsten Angaben zusammenzustellen.'}</p>
+    <p>{en ? 'If you have difficulty using the website or would like to suggest an improvement, please contact us by email. Include the page address and a brief description of the difficulty. Device, browser or assistive technology details are helpful if you wish to share them. We will review your feedback and look into possible improvements.' : 'Wenn du Schwierigkeiten bei der Nutzung unserer Website hast oder eine Verbesserung anregen möchtest, melde dich gerne per E-Mail bei uns. Nenne möglichst die betroffene Seite und beschreibe die Einschränkung. Angaben zu Gerät, Browser oder verwendeten Hilfsmitteln kannst du freiwillig ergänzen. Wir nehmen deine Hinweise auf und prüfen mögliche Verbesserungen.'}</p>
     <div class="legal-contact"><p class="eyebrow">{en ? 'Report by email' : 'Barriere per E-Mail melden'}</p><a href={feedback}>{business.email}</a></div>
     <a class="button button-dark" href={feedback}><Mail size={17} aria-hidden="true"/> {en ? 'Email the restaurant' : 'Dem Restaurant schreiben'}</a>
-    <div class="legal-contact"><p class="eyebrow">{en ? 'Technical accessibility feedback' : 'Technisches Feedback zur Barrierefreiheit'}</p><a href={technicalFeedback}>barrierefrei@wabiy.com</a></div>
-    <a class="text-link" href={technicalFeedback}>{en ? 'Open an email to Wabiy' : 'E-Mail an Wabiy öffnen'}</a>
   </LegalSection>
 </LegalLayout>
